@@ -1,0 +1,10 @@
+{% extends 'main/base.html' %}
+{% block title %}User History{% endblock %}
+{% block content %}
+<h2>User History</h2>
+<ul>
+    {% for visit in visits %}
+    <li>{{ visit.date }} - Visited: {{ visit.page }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

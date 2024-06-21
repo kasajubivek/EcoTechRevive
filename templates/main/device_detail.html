@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Device Details{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">{{ device.name }}</h2>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{ device.brand }} {{ device.model }}</h5>
+        <p class="card-text"><strong>Type:</strong> {{ device.device_type }}</p>
+        <p class="card-text"><strong>Serial Number:</strong> {{ device.serial_number }}</p>
+        <p class="card-text"><strong>Date Received:</strong> {{ device.date_received }}</p>
+        <p class="card-text"><strong>Functional:</strong> {{ device.is_functional }}</p>
+    </div>
+</div>
+{% endblock %}
