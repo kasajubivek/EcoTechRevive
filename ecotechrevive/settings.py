@@ -111,7 +111,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 
+# defining the storage for messages
+MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
+
+# configuring the session engine for session handling
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
 # Media files (User uploads)
 # https://docs.djangoproject.com/en/5.0/ref/settings/#media-url
