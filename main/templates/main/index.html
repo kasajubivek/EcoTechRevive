@@ -1,0 +1,15 @@
+{% extends "main/base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4">Welcome to EcoTechRevive!</h1>
+    <p class="lead">Your one-stop platform for sustainable living and eco-friendly technology.</p>
+    <hr class="my-4">
+    <p>Join us in our mission to make the world a greener place.</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'register' %}" role="button">Get Started</a>
+</div>
+<form method="GET" action="{% url 'search' %}">
+    <input type="text" name="q" placeholder="Search...">
+    <button type="submit">Search</button>
+</form>
+{% endblock %}

@@ -1,5 +1,9 @@
 from django.db import models
 
+# Create your models here.
+from django.db import models
+from django.contrib.auth.models import User
+
 class Device(models.Model):
     DEVICE_TYPES = [
         ('Smartphone', 'Smartphone'),
@@ -51,6 +55,21 @@ class CustomerSupport(models.Model):
 
     def __str__(self):
         return f"Support request from {self.name} ({self.email})"
-from django.db import models
 
-# Create your models here.
+
+class UploadedFile(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='uploads/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Uploaded file by {self.user.username} at {self.uploaded_at}"
+
+
+class UserSession(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    session_date = models.DateField()
+    visit_count = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"Session for {self.user.username} on {self.session_date}"

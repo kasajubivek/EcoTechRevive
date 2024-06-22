@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="{% url 'profile' %}" class="list-group-item list-group-item-action">User Profile</a>
+                <a href="{% url 'device_list' %}" class="list-group-item list-group-item-action">Device List</a>
+                <a href="{% url 'upload_file' %}" class="list-group-item list-group-item-action">Upload File</a>
+                <a href="{% url 'user_history' %}" class="list-group-item list-group-item-action">User History</a>
+                <a href="{% url 'search' %}" class="list-group-item list-group-item-action">Search</a>
+                <a href="{% url 'contact_us' %}" class="list-group-item list-group-item-action">Contact Us</a>
+                <a href="{% url 'about_us' %}" class="list-group-item list-group-item-action">About Us</a>
+                <a href="{% url 'logout' %}" class="list-group-item list-group-item-action">Logout</a>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h2>User Profile</h2>
+                </div>
+                <div class="card-body">
+                    <p><strong>Name:</strong> {{ user.username }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <!-- Add more fields as needed -->
+                    <!-- Example: -->
+                    <!-- <p><strong>Phone:</strong> {{ user.phone }}</p> -->
+                    <!-- <p><strong>Address:</strong> {{ user.address }}</p> -->
+
+                    <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+                    <a href="{% url 'index' %}" class="btn btn-secondary">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
