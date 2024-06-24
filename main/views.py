@@ -35,17 +35,16 @@ class DeviceDetailView(DetailView):
     model = Device
     template_name = 'main/device_detail.html'
 
-
+# Login functionality for the user
+# It uses he User model provided by Django framework
+# and makes sure to display an error in case of
+# invalid username and/or password.
 def user_login(request):
-    print(" i entered in this methid...")
     if request.method == 'POST':
         form = LoginForm(request.POST)
-        print(" form validity ", form.is_valid())
         if form.is_valid():
-            print(" i came here...form valid")
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            print(" i came here...")
             if not username or not password:
                 messages.error(request, 'Invalid username or password.')
             else:
@@ -62,7 +61,8 @@ def user_login(request):
     return render(request, 'main/user_login.html', {'form': form})
 
 
-# views.py
+# Processing the logout request
+# making sure to clear the session.
 @login_required
 def logout_view(request):
     logout(request)
