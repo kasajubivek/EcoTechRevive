@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -37,20 +37,36 @@ class DeviceDetailView(DetailView):
 
 
 def user_login(request):
+    print(" i entered in this methid...")
     if request.method == 'POST':
         form = LoginForm(request.POST)
+        print(" form validity ", form.is_valid())
         if form.is_valid():
+            print(" i came here...form valid")
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('index')
-            else:
+            print(" i came here...")
+            if not username or not password:
                 messages.error(request, 'Invalid username or password.')
+            else:
+                user = authenticate(username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    return redirect('profile')
+                else:
+                    messages.error(request, 'Invalid username or password.')
+        else:
+            messages.error(request, 'Invalid username or password.')
     else:
         form = LoginForm()
     return render(request, 'main/user_login.html', {'form': form})
+
+
+# views.py
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect('login')  # redirect to login page or any other page you prefer
 
 
 def user_register(request):
@@ -91,6 +107,7 @@ def edit_profile(request):
     return render(request, 'main/edit_profile.html', {'form': form})
 
 
+@login_required
 def user_history(request):
     if request.method == 'POST':
         form = UserHistoryForm(request.POST)
