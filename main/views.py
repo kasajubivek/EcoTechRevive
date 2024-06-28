@@ -51,6 +51,8 @@ def user_login(request):
                 user = authenticate(username=username, password=password)
                 if user is not None:
                     login(request, user)
+                    fav_color = request.session.get('fav_color', 'red')
+                    request.session.modified = True
                     return redirect('profile')
                 else:
                     messages.error(request, 'Invalid username or password.')
@@ -108,31 +110,50 @@ def edit_profile(request):
 
 
 @login_required
-def user_history(request):
-    if request.method == 'POST':
-        form = UserHistoryForm(request.POST)
-        if form.is_valid():
-            # Process the user session data
-            pass
-    else:
-        form = UserHistoryForm()
-    return render(request, 'main/user_history.html', {'form': form})
+# def user_history(request):
+#     if request.method == 'POST':
+#         form = UserHistoryForm(request.POST)
+#         if form.is_valid():
+#             # Process the user session data
+#             pass
+#     else:
+#         form = UserHistoryForm()
+#     return render(request, 'main/user_history.html', {'form': form})
 
 
 def search_results(request):
     query = request.GET.get('q')
     # Perform search based on query
     results = []
+    page_view(request, 'Search')
     return render(request, 'main/search_results.html', {'results': results})
 
 
 def contact_us(request):
+    page_view(request, 'Contact Us')
     return render(request, 'main/contact_us.html')
 
 
 def about_us(request):
+    page_view(request, 'About Us')
     return render(request, 'main/about_us.html')
 
 
 def team_details(request):
     return render(request, 'main/team_details.html')
+
+
+
+def page_view(request, page_name):
+    page_counts = request.session.get('page_counts', {})
+    page_counts[page_name] = page_counts.get(page_name, 0) + 1
+    request.session['page_counts'] = page_counts
+
+
+def history(request):
+    page_counts = request.session.get('page_counts', {})
+    page_visits = [{'page_name': page_name, 'visit_count': count} for page_name, count in page_counts.items()]
+
+    page_visits_sorted = sorted(page_visits, key=lambda x: x['visit_count'], reverse=True)
+
+    return render(request, 'main/history.html', {'page_visits': page_visits_sorted})
