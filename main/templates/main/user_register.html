@@ -1,19 +1,56 @@
-<!-- main/templates/main/user_register.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-    {% load static %}  <!-- Add this line to load the static template tag library -->
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body>
-    <h2>Register</h2>
-    <form method="POST" action="{% url 'register' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
-    </form>
-    <a href="{% url 'login' %}">Already have an account? Login here</a>
-</body>
-</html>
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Register</h2>
+
+<form method="POST" action="{% url 'register' %}">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="form-group">
+        <label for="{{ form.username.id_for_label }}">Username:</label>
+        {{ form.username }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.email.id_for_label }}">Email:</label>
+        {{ form.email }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.password.id_for_label }}">Password:</label>
+        {{ form.password }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.password_confirm.id_for_label }}">Confirm Password:</label>
+        {{ form.password_confirm }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.security_question_1.id_for_label }}">Security Question 1:</label>
+        {{ form.security_question_1 }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.security_answer_1.id_for_label }}">Answer:</label>
+        {{ form.security_answer_1 }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.security_question_2.id_for_label }}">Security Question 2:</label>
+        {{ form.security_question_2 }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.security_answer_2.id_for_label }}">Answer:</label>
+        {{ form.security_answer_2 }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.security_question_3.id_for_label }}">Security Question 3:</label>
+        {{ form.security_question_3 }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.security_answer_3.id_for_label }}">Answer:</label>
+        {{ form.security_answer_3 }}
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+<p class="mt-3">Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+{% endblock %}

@@ -1,7 +1,4 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
 from django.contrib.auth.models import User
 
 class Device(models.Model):
@@ -73,3 +70,25 @@ class UserSession(models.Model):
 
     def __str__(self):
         return f"Session for {self.user.username} on {self.session_date}"
+
+
+class UserProfile(models.Model):
+    SECURITY_QUESTIONS = [
+        ('What was your childhood nickname?', 'What was your childhood nickname?'),
+        ('What is the name of your favorite childhood friend?', 'What is the name of your favorite childhood friend?'),
+        ('What was your dream job as a child?', 'What was your dream job as a child?'),
+        ('What is the name of your first pet?', 'What is the name of your first pet?'),
+        ('What was the model of your first car?', 'What was the model of your first car?'),
+        ('What elementary school did you attend?', 'What elementary school did you attend?')
+    ]
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    security_question_1 = models.CharField(max_length=255, choices=SECURITY_QUESTIONS)
+    security_answer_1 = models.CharField(max_length=255)
+    security_question_2 = models.CharField(max_length=255, choices=SECURITY_QUESTIONS)
+    security_answer_2 = models.CharField(max_length=255)
+    security_question_3 = models.CharField(max_length=255, choices=SECURITY_QUESTIONS)
+    security_answer_3 = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.user.username

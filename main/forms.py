@@ -2,7 +2,7 @@
 
 from django import forms
 from django.contrib.auth.models import User
-from .models import UploadedFile
+from .models import UploadedFile, UserProfile
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=150, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -11,10 +11,16 @@ class LoginForm(forms.Form):
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     password_confirm = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    security_question_1 = forms.ChoiceField(choices=UserProfile.SECURITY_QUESTIONS, label='Security Question 1')
+    security_answer_1 = forms.CharField(label='Security Answer 1')
+    security_question_2 = forms.ChoiceField(choices=UserProfile.SECURITY_QUESTIONS, label='Security Question 2')
+    security_answer_2 = forms.CharField(label='Security Answer 2')
+    security_question_3 = forms.ChoiceField(choices=UserProfile.SECURITY_QUESTIONS, label='Security Question 3')
+    security_answer_3 = forms.CharField(label='Security Answer 3')
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password']
+        fields = ['username', 'email', 'password', 'password_confirm', 'security_question_1', 'security_answer_1', 'security_question_2', 'security_answer_2', 'security_question_3', 'security_answer_3']
 
     def clean(self):
         cleaned_data = super().clean()
@@ -25,6 +31,21 @@ class RegisterForm(forms.ModelForm):
             self.add_error('password_confirm', "Passwords do not match")
 
         return cleaned_data
+
+    def save(self, commit=True):
+        user = super(RegisterForm, self).save(commit=False)
+        user.set_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+            profile = UserProfile.objects.create(user=user,
+                                                 security_question_1=self.cleaned_data['security_question_1'],
+                                                 security_answer_1=self.cleaned_data['security_answer_1'],
+                                                 security_question_2=self.cleaned_data['security_question_2'],
+                                                 security_answer_2=self.cleaned_data['security_answer_2'],
+                                                 security_question_3=self.cleaned_data['security_question_3'],
+                                                 security_answer_3=self.cleaned_data['security_answer_3'])
+            profile.save()
+        return user
 
 class UploadFileForm(forms.ModelForm):
     class Meta:
@@ -45,9 +66,29 @@ class EditProfileForm(forms.ModelForm):
         self.fields['last_name'].widget.attrs.update({'class': 'form-control'})
         self.fields['email'].widget.attrs.update({'class': 'form-control'})
 
-
 class UserHistoryForm(forms.Form):
     username = forms.CharField(max_length=150, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
 
 class UserSessionForm(forms.Form):
     username = forms.CharField(max_length=150, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+class PasswordResetForm(forms.Form):
+    username = forms.CharField(label='Username')
+    security_question_1 = forms.CharField(label='Security Question 1', disabled=True)
+    security_answer_1 = forms.CharField(label='Security Answer 1')
+    security_question_2 = forms.CharField(label='Security Question 2', disabled=True)
+    security_answer_2 = forms.CharField(label='Security Answer 2')
+    security_question_3 = forms.CharField(label='Security Question 3', disabled=True)
+    security_answer_3 = forms.CharField(label='Security Answer 3')
+
+class SetNewPasswordForm(forms.Form):
+    new_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}), label='New Password')
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}), label='Confirm Password')
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password = cleaned_data.get('new_password')
+        confirm_password = cleaned_data.get('confirm_password')
+        if new_password != confirm_password:
+            raise forms.ValidationError("Passwords do not match.")
+        return cleaned_data

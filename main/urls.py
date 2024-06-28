@@ -9,7 +9,6 @@ urlpatterns = [
     path('login/', views.user_login, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('register/', views.user_register, name='register'),
-    path('password_reset/', auth_views.PasswordResetView.as_view(template_name='password_reset.html'), name='password_reset'),
     path('upload/', views.upload_file, name='upload_file'),
     path('history/', views.user_history, name='user_history'),
     path('devices/', views.DeviceListView.as_view(), name='device_list'),
@@ -20,4 +19,6 @@ urlpatterns = [
     path('team/', views.team_details, name='team_details'),
     path('profile/', views.user_profile, name='profile'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
+    path('password-reset/', views.password_reset_security_question, name='password_reset'),
+    path('password-reset/new-password/', views.set_new_password, name='password_reset_new_password'),
 ]
