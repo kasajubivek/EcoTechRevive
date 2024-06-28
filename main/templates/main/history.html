@@ -1,9 +1,20 @@
 <!-- templates/main/history.html -->
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}History{% endblock %}
+<!-- history.html -->
 
-{% block content %}
-<h2>User History</h2>
-<p>Display user history here...</p>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Visit History</title>
+</head>
+<body>
+    <h1>Visit History</h1>
+    <ul>
+        {% for page_visit in page_visits %}
+            <li><h2>{{ page_visit.page_name}} Page: {{ page_visit.visit_count }} visits</h2></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
