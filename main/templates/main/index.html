@@ -1,12 +1,20 @@
 {% extends "main/base.html" %}
-{% load static %}
 {% block title %}Home{% endblock %}
 {% block content %}
 <div class="jumbotron">
-    <h1 class="display-4">Welcome to EcoTechRevive!</h1>
-    <p class="lead">Your one-stop platform for sustainable living and eco-friendly technology.</p>
-    <hr class="my-4">
-    <p>Join us in our mission to make the world a greener place.</p>
-    <a class="btn btn-primary btn-lg" href="{% url 'register' %}" role="button">Get Started</a>
+    {% if user.is_authenticated %}
+        <h1 class="display-4">Welcome back, {{ user.username }}!</h1>
+        <p class="lead">Explore the latest in sustainable living and eco-friendly technology.</p>
+        <hr class="my-4">
+        <p>Thank you for being part of our mission to make the world a greener place.</p>
+        <a class="btn btn-primary btn-lg" href="{% url 'profile' %}" role="button">Go to Profile</a>
+        <a class="btn btn-secondary btn-lg" href="{% url 'logout' %}" role="button">Logout</a>
+    {% else %}
+        <h1 class="display-4">Welcome to EcoTechRevive!</h1>
+        <p class="lead">Your one-stop platform for sustainable living and eco-friendly technology.</p>
+        <hr class="my-4">
+        <p>Join us in our mission to make the world a greener place.</p>
+        <a class="btn btn-primary btn-lg" href="{% url 'register' %}" role="button">Get Started</a>
+    {% endif %}
 </div>
 {% endblock %}
