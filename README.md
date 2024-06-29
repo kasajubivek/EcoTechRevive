@@ -6,7 +6,7 @@ Git
 Steps
 
 Clone the repository:
-git clone https://github.com/VatsalPatel19/EcoTechRevive.git
+git clone <github link>
 cd EcoTechRevive
 
 Create a virtual environment:
