@@ -4,9 +4,11 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import UploadedFile, UserProfile
 
+
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=150, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     password = forms.CharField(required=True, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
 
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
@@ -20,7 +22,8 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'password_confirm', 'security_question_1', 'security_answer_1', 'security_question_2', 'security_answer_2', 'security_question_3', 'security_answer_3']
+        fields = ['username', 'email', 'password', 'password_confirm', 'security_question_1', 'security_answer_1',
+                  'security_question_2', 'security_answer_2', 'security_question_3', 'security_answer_3']
 
     def clean(self):
         cleaned_data = super().clean()
@@ -47,6 +50,7 @@ class RegisterForm(forms.ModelForm):
             profile.save()
         return user
 
+
 class UploadFileForm(forms.ModelForm):
     class Meta:
         model = UploadedFile
@@ -54,6 +58,7 @@ class UploadFileForm(forms.ModelForm):
         widgets = {
             'file': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
+
 
 class EditProfileForm(forms.ModelForm):
     class Meta:
@@ -66,24 +71,41 @@ class EditProfileForm(forms.ModelForm):
         self.fields['last_name'].widget.attrs.update({'class': 'form-control'})
         self.fields['email'].widget.attrs.update({'class': 'form-control'})
 
+
 class UserHistoryForm(forms.Form):
     username = forms.CharField(max_length=150, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+
 
 class UserSessionForm(forms.Form):
     username = forms.CharField(max_length=150, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
 
+
 class PasswordResetForm(forms.Form):
-    username = forms.CharField(label='Username')
-    security_question_1 = forms.CharField(label='Security Question 1', disabled=True)
-    security_answer_1 = forms.CharField(label='Security Answer 1')
-    security_question_2 = forms.CharField(label='Security Question 2', disabled=True)
-    security_answer_2 = forms.CharField(label='Security Answer 2')
-    security_question_3 = forms.CharField(label='Security Question 3', disabled=True)
-    security_answer_3 = forms.CharField(label='Security Answer 3')
+    username = forms.CharField(
+        max_length=150,
+        required=True,
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    security_answer_1 = forms.CharField(
+        label="Security Question 1",
+        required=True,
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    security_answer_2 = forms.CharField(
+        label="Security Question 2",
+        required=True,
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    security_answer_3 = forms.CharField(
+        label="Security Question 3",
+        required=True,
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
 
 class SetNewPasswordForm(forms.Form):
     new_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}), label='New Password')
-    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}), label='Confirm Password')
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+                                       label='Confirm Password')
 
     def clean(self):
         cleaned_data = super().clean()
