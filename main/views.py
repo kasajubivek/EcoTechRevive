@@ -22,6 +22,7 @@ def upload_file(request):
             return redirect('index')
     else:
         form = UploadFileForm()
+    page_view(request, 'Upload File')
     return render(request, 'main/upload.html', {'form': form})
 
 
@@ -68,6 +69,7 @@ def user_login(request):
 @login_required
 def logout_view(request):
     logout(request)
+    request.session.flush()
     return redirect('login')  # redirect to login page or any other page you prefer
 
 
@@ -102,6 +104,7 @@ def user_register(request):
 
 @login_required
 def user_profile(request):
+    page_view(request, 'User Profile')
     return render(request, 'main/profile.html')
 
 
@@ -145,27 +148,13 @@ def contact_us(request):
 
 def about_us(request):
     page_view(request, 'About Us')
+    page_view(request, 'About Us')
     return render(request, 'main/about_us.html')
 
 
 def team_details(request):
+    page_view(request, 'Team Details')
     return render(request, 'main/team_details.html')
-
-
-
-def page_view(request, page_name):
-    page_counts = request.session.get('page_counts', {})
-    page_counts[page_name] = page_counts.get(page_name, 0) + 1
-    request.session['page_counts'] = page_counts
-
-
-def history(request):
-    page_counts = request.session.get('page_counts', {})
-    page_visits = [{'page_name': page_name, 'visit_count': count} for page_name, count in page_counts.items()]
-
-    page_visits_sorted = sorted(page_visits, key=lambda x: x['visit_count'], reverse=True)
-
-    return render(request, 'main/history.html', {'page_visits': page_visits_sorted})
 
 def password_reset_security_question(request):
     if request.method == 'POST':
@@ -212,3 +201,38 @@ def set_new_password(request):
         form = SetNewPasswordForm()
 
     return render(request, 'main/set_new_password.html', {'form': form})
+
+
+
+
+def page_view(request, page):
+    page_counts = request.session.get('page_counts', {})
+    page_counts[page] = page_counts.get(page, 0) + 1
+    request.session['page_counts'] = page_counts
+    recently_viewed(request,page)
+
+
+def recently_viewed(request, page):
+    if 'recently_viewed' not in request.session:
+        request.session['recently_viewed'] = []
+
+    if page in request.session['recently_viewed']:
+        request.session['recently_viewed'].remove(page)
+
+    request.session['recently_viewed'].insert(0, page)
+
+    if len(request.session['recently_viewed']) > 3:
+        request.session['recently_viewed'].pop()
+
+    request.session.modified = True
+
+def history(request):
+    page_counts = request.session.get('page_counts', {})
+    page_visits = [{'page_name': page_name, 'visit_count': count} for page_name, count in page_counts.items()]
+
+    page_visits_sorted = sorted(page_visits, key=lambda x: x['visit_count'], reverse=True)
+    recently_viewed = request.session.get('recently_viewed', {})
+
+    return render(request, 'main/history.html', {'page_visits': page_visits_sorted, 'recently_viewed': recently_viewed})
+
+

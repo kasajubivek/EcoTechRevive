@@ -21,5 +21,5 @@ urlpatterns = [
     path('edit_profile/', views.edit_profile, name='edit_profile'),
     path('password-reset/', views.password_reset_security_question, name='password_reset'),
     path('password-reset/new-password/', views.set_new_password, name='password_reset_new_password'),
-    #path('history/', views.history, name='history'),
+    path('history/', views.history, name='history'),
 ]

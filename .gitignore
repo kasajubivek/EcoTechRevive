@@ -1,0 +1,7 @@
+.idea
+.venv
+db.sqlite3
+ecotechrevive/__pycache__
+main/__pycache__
+main/migrations
+env
