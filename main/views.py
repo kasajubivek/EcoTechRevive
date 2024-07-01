@@ -104,7 +104,6 @@ def user_register(request):
 
 @login_required
 def user_profile(request):
-    page_view(request, 'User Profile')
     return render(request, 'main/profile.html')
 
 

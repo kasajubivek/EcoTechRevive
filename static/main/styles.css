@@ -19,15 +19,15 @@ html, body {
     font-family: 'Poppins', sans-serif;
 }
 
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
+/*.wrapper {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    min-height: 100vh;*/
+/*}*/
 
-.content {
-    flex: 1;
-}
+/*.content {*/
+/*    flex: 1;*/
+/*}*/
 
 .container{
     max-width: 1170px;
@@ -44,6 +44,7 @@ ul{
 }
 
 .footer{
+    margin: 100px 0;
     background-color: #24262b;
     padding: 70px 0;
 }
