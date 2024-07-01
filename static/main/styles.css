@@ -19,42 +19,43 @@ html, body {
     font-family: 'Poppins', sans-serif;
 }
 
-/*.wrapper {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    min-height: 100vh;*/
-/*}*/
-
-/*.content {*/
-/*    flex: 1;*/
-/*}*/
-
-.container{
-    max-width: 1170px;
-    margin:auto;
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 90vh;
 }
 
-.row{
+.content {
+    flex: 1;
+}
+
+.container {
+    max-width: 1170px;
+    margin: auto;
+}
+
+.row {
     display: flex;
     flex-wrap: wrap;
 }
 
-ul{
+ul {
     list-style: none;
 }
 
-.footer{
-    margin: 100px 0;
+.footer {
     background-color: #24262b;
     padding: 30px 0;
+    /* Add this line to ensure the footer is always at the bottom */
+    margin-top: auto;
 }
 
-.footer-col{
+.footer-col {
     width: 25%;
     padding: 0 15px;
 }
 
-.footer-col h4{
+.footer-col h4 {
     font-size: 18px;
     color: #ffffff;
     text-transform: capitalize;
@@ -63,10 +64,10 @@ ul{
     position: relative;
 }
 
-.footer-col h4::before{
+.footer-col h4::before {
     content: '';
     position: absolute;
-    left:0;
+    left: 0;
     bottom: -10px;
     background-color: #5aff00;
     height: 2px;
@@ -74,11 +75,11 @@ ul{
     width: 50px;
 }
 
-.footer-col ul li:not(:last-child){
+.footer-col ul li:not(:last-child) {
     margin-bottom: 10px;
 }
 
-.footer-col ul li a{
+.footer-col ul li a {
     font-size: 16px;
     text-transform: capitalize;
     color: #ffffff;
@@ -89,17 +90,17 @@ ul{
     transition: all 0.3s ease;
 }
 
-.footer-col ul li a:hover{
+.footer-col ul li a:hover {
     color: #ffffff;
     padding-left: 8px;
 }
 
-.footer-col .social-links a{
+.footer-col .social-links a {
     display: inline-block;
     height: 40px;
     width: 40px;
-    background-color: rgba(255,255,255,0.2);
-    margin:0 10px 10px 0;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 0 10px 10px 0;
     text-align: center;
     line-height: 40px;
     border-radius: 50%;
@@ -107,20 +108,22 @@ ul{
     transition: all 0.5s ease;
 }
 
-.footer-col .social-links a:hover{
+.footer-col .social-links a:hover {
     color: #24262b;
     background-color: #ffffff;
 }
 
 /*responsive*/
-@media(max-width: 767px){
-  .footer-col{
+@media(max-width: 767px) {
+  .footer-col {
     width: 50%;
     margin-bottom: 30px;
+  }
 }
-}
-@media(max-width: 574px){
-  .footer-col{
+
+@media(max-width: 574px) {
+  .footer-col {
     width: 100%;
+  }
 }
-}
+
