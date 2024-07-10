@@ -22,4 +22,8 @@ urlpatterns = [
     path('password-reset/', views.password_reset_security_question, name='password_reset'),
     path('password-reset/new-password/', views.set_new_password, name='password_reset_new_password'),
     path('history/', views.history, name='history'),
+    path('add-to-cart/<int:pk>/', views.add_to_cart_view, name='add_to_cart'),
+    path('contact-success/', views.contact_success, name='contact_success'),
+    path('add-product/', views.add_product, name='add_product'),
+    # path('contact/', views.contact_us, name='contact'),
 ]

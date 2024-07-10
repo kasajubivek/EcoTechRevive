@@ -1,7 +1,25 @@
 {% extends "main/base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<div class="jumbotron">
+{% load static %}
+
+<!-- Load CSS file -->
+<link rel="stylesheet" href="{% static 'main/styles.css' %}">
+
+<div class="hero-section">
+  <div class="hero-content">
+      <h1>FULL SERVICE ELECTRONICS RECYCLING IN MINNEAPOLIS & ST. PAUL</h1>
+      <h2>IMPACT-DRIVEN E-WASTE RECYCLER AND REFURBISHER</h2>
+      <p>Repowered (formerly Tech Dump and Tech Discounts) is a nonprofit social enterprise and local industry leader in electronics recycling and refurbishing — certified and ready to meet your IT asset management needs.</p>
+      <div class="hero-buttons">
+          <a class="btn btn-primary btn-lg btn-request" href="#">Request Our Services</a>
+          <a class="btn btn-primary btn-lg btn-request" href="#">Shop Refurbished Electronics</a>
+      </div>
+  </div>
+</div>
+
+
+<!-- <div class="jumbotron">
     {% if user.is_authenticated %}
         <h1 class="display-4">Welcome back, {{ user.username }}!</h1>
         <p class="lead">Explore the latest in sustainable living and eco-friendly technology.</p>
@@ -16,5 +34,97 @@
         <p>Join us in our mission to make the world a greener place.</p>
         <a class="btn btn-primary btn-lg" href="{% url 'register' %}" role="button">Get Started</a>
     {% endif %}
+</div> -->
+
+{% if products %}
+<h3 style="text-align:center; color:#3E454C;">{{ word }}</h3>
+<br>
+
+<!-- products data start -->
+<div class="row">
+  {% for p in products %}
+  <!-- card1 -->
+  <div class="column">
+    <div class="container page-wrapper" style="width: 450px;">
+      <div class="page-inner">
+        <div class="row">
+          <div class="el-wrapper">
+            <div class="box-up">
+              <img class="img" src="{{ p.product_image.url }}" alt="product pic" height="300px" width="300px">
+              <div class="img-info">
+                <div class="info-inner">
+                  <span style="background-color:#3e454c; color:#fbfbfb;" class="p-company">{{ p.name }}</span>
+                </div>
+                <div class="a-size">{{ p.description }}</div>
+              </div>
+            </div>
+            <div class="box-down">
+              <div class="h-bg">
+                <div class="h-bg-inner"></div>
+              </div>
+              <a class="cart" href="{% url 'add_to_cart' p.id %}">
+                <span class="price">৳{{ p.price }}</span>
+                <span class="add-to-cart">
+                  <span class="txt"><i class="fa fa-shopping-cart"></i> Add To Cart</span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- card1 end -->
+  {% if forloop.counter|divisibleby:"3" %}
 </div>
+<div class="row">
+  
+  {% endif %}
+  {% endfor %}
+</div>
+<!-- products data end -->
+{% else %}
+<h3 style="text-align:center; color:#3E454C;">No Search Found</h3>
+{% endif %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const messages = {{ messages_list|safe }};
+    messages.forEach(message => {
+      alert(message);
+    });
+  });
+</script>
+
+<!-- <br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br> -->
+
+<!-- Contact Us Section -->
+<div class="contact-section">
+    <div class="container">
+        <h2>Contact Sales</h2>
+        <p>Let's get this conversation started. Tell us a bit about yourself, and we'll get in touch as soon as we can.</p>
+        <form method="post" action="">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_first_name">First name</label>
+                {{ form.first_name }}
+            </div>
+            <div class="form-group">
+                <label for="id_last_name">Last name</label>
+                {{ form.last_name }}
+            </div>
+            <div class="form-group">
+                <label for="id_email">Work email</label>
+                {{ form.email }}
+            </div>
+            <div class="form-group">
+                <label for="id_message">Message</label>
+                {{ form.message }}
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+    </div>
+</div>
+
 {% endblock %}

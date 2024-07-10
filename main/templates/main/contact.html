@@ -1,0 +1,32 @@
+<!-- main/templates/main/contact.html -->
+
+{% extends 'main/base.html' %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Contact Sales</h2>
+    <p>Let's get this conversation started. Tell us a bit about yourself, and we'll get in touch as soon as we can.</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.first_name.label_tag }}
+            {{ form.first_name }}
+        </div>
+        <div class="form-group">
+            {{ form.last_name.label_tag }}
+            {{ form.last_name }}
+        </div>
+        <div class="form-group">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+        </div>
+        <div class="form-group">
+            {{ form.message.label_tag }}
+            {{ form.message }}
+        </div>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+    </form>
+</div>
+{% endblock %}

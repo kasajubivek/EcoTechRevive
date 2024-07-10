@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+{% load widget_tweaks %}
+{% block title %}Add Product{% endblock %}
+{% block content %}
+<div class="container">
+    <h2 class="mt-4">Add Product</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Product Name</label>
+            {% render_field form.name class="form-control" placeholder="Product Name" %}
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            {% render_field form.description class="form-control" placeholder="Description" %}
+        </div>
+        <div class="form-group">
+            <label for="price">Price</label>
+            {% render_field form.price class="form-control" placeholder="Price" %}
+        </div>
+        <div class="form-group">
+            <label for="product_image">Product Image</label>
+            {% render_field form.product_image class="form-control-file" %}
+        </div>
+        <button type="submit" class="btn btn-primary">Add Product</button>
+    </form>
+</div>
+{% endblock %}
