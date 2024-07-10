@@ -4,8 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Device, UserProfile
-from .forms import LoginForm, RegisterForm, UploadFileForm, UserHistoryForm, EditProfileForm, PasswordResetForm, SetNewPasswordForm
+from .models import Device, UserProfile, Product
+from .forms import LoginForm, RegisterForm, UploadFileForm, UserHistoryForm, EditProfileForm, PasswordResetForm, SetNewPasswordForm, ProductForm, ContactForm
 from django.contrib.auth import update_session_auth_hash
 
 def index(request):
@@ -235,4 +235,83 @@ def history(request):
 
     return render(request, 'main/history.html', {'page_visits': page_visits_sorted, 'recently_viewed': recently_viewed})
 
+def contact_us(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            messages.success(request, 'Thank you for your feedback. We will contact you soon.')
+            return redirect('index')  # Redirect to the home page
+    else:
+        form = ContactForm()
+    return render(request, 'main/contact_us.html', {'form': form})
 
+
+def contact_success(request):
+    return redirect('index')
+
+@login_required
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = ProductForm()
+    page_view(request, 'Add Product')
+    return render(request, 'main/add_product.html', {'form': form})
+
+def contactus_view(request):
+    sub = forms.ContactusForm()
+    if request.method == 'POST':
+        sub = forms.ContactusForm(request.POST)
+        if sub.is_valid():
+            email = sub.cleaned_data['Email']
+            name=sub.cleaned_data['Name']
+            message = sub.cleaned_data['Message']
+            send_mail(str(name)+' || '+str(email),message, settings.EMAIL_HOST_USER, settings.EMAIL_RECEIVING_USER, fail_silently = False)
+            return render(request, 'contactussuccess.html')
+    return render(request, 'contactus.html', {'form':sub})
+
+
+def index(request):
+    products = Product.objects.all()  # Fetch all products from the database
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            # Handle form submission (e.g., send email)
+            messages.success(request, 'Thank you for your message. We will get back to you soon.')
+            return redirect('index')  # Redirect to index or another page
+    else:
+        form = ContactForm()
+
+    return render(request, 'main/index.html', {'form': form, 'products': products})
+
+
+
+@login_required
+def add_to_cart_view(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    # Logic to add the product to the cart
+    messages.info(request, f'{product.name} added to cart successfully!')
+    return redirect('index')
+
+@login_required
+def add_to_cart(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    cart.products.add(product)
+    messages.success(request, 'Product added to cart successfully!')
+    return redirect('index')
+
+def contact_us(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            # Here you would handle the form data, e.g., send an email
+            messages.success(request, 'Thank you for your message. We will get back to you soon.')
+            return redirect('index')  # Redirect to index or wherever you prefer
+    else:
+        form = ContactForm()
+
+    return render(request, 'main/index.html', {'form': form})

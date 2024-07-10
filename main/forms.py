@@ -2,7 +2,7 @@
 
 from django import forms
 from django.contrib.auth.models import User
-from .models import UploadedFile, UserProfile
+from .models import UploadedFile, UserProfile,  Product
 
 
 class LoginForm(forms.Form):
@@ -114,3 +114,28 @@ class SetNewPasswordForm(forms.Form):
         if new_password != confirm_password:
             raise forms.ValidationError("Passwords do not match.")
         return cleaned_data
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['name', 'price', 'description', 'product_image']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'description': forms.TextInput(attrs={'class': 'form-control'}),
+            'product_image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }
+
+
+#for contact us page
+class ContactusForm(forms.Form):
+    Name = forms.CharField(max_length=30)
+    Email = forms.EmailField()
+    Message = forms.CharField(max_length=500,widget=forms.Textarea(attrs={'rows': 3, 'cols': 30}))
+
+
+class ContactForm(forms.Form):
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
+    email = forms.EmailField(required=True)
+    message = forms.CharField(widget=forms.Textarea, required=True)
