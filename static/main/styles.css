@@ -20,10 +20,15 @@ html, body {
     font-family: 'Poppins', sans-serif;
 }
 
+body {
+    display: flex;
+    flex-direction: column; /* Ensures that elements are laid out in a column */
+    min-height: 100vh; /* Full viewport height */
+}
 .wrapper {
     display: flex;
+    flex: 1;
     flex-direction: column;
-    min-height: 100vh;
 }
 
 .content {
@@ -45,14 +50,20 @@ ul{
     list-style: none;
 }
 
-.footer{
+.footer {
     background-color: #24262b;
-    padding: 70px 0;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: auto; /* Pushes the footer to the bottom of the viewport/content */
 }
 
-.footer-col{
-    width: 25%;
+/* Ensure footer contents are properly aligned and spaced */
+.footer-col {
+    width: 25%; /* Adjust width as needed for your layout */
     padding: 0 15px;
+    display: inline-block; /* Aligns footer columns horizontally */
+    vertical-align: top; /* Aligns content to the top */
 }
 
 .footer-col h4{
@@ -79,13 +90,11 @@ ul{
     margin-bottom: 10px;
 }
 
-.footer-col ul li a{
+.footer-col ul li a {
     font-size: 16px;
     text-transform: capitalize;
     color: #ffffff;
     text-decoration: none;
-    font-weight: 300;
-    color: #bbbbbb;
     display: block;
     transition: all 0.3s ease;
 }
@@ -197,7 +206,7 @@ body {
 
 .footer .fa {
     font-size: 20px;
-} */
+}
 
 /* New hover animations for product cards */
 
@@ -222,7 +231,6 @@ html {
   justify-content: center;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
-  justify-content: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -264,7 +272,7 @@ body {
 }
 
 .el-wrapper:hover .h-bg {
-  left: 0px;
+  left: 0 ;
 }
 
 .el-wrapper:hover .price {
@@ -508,9 +516,9 @@ body {
 }
 
 img {
-    width: 100%; 
-    height: auto; 
-    max-width: 100%; 
+    width: 100%;
+    height: auto;
+    max-width: 100%;
     max-height: 100%;
     display:block;
 }
@@ -530,31 +538,31 @@ img {
       opacity: 1;
     }
   }
-  
+
   .el-wrapper:hover .h-bg {
     left: 0px;
   }
-  
+
   .el-wrapper:hover .price {
     left: 20px;
     transform: translateY(-50%);
     color: #f3f3f3;
   }
-  
+
   .el-wrapper:hover .add-to-cart {
     left: 50%;
   }
-  
+
   .el-wrapper:hover .img {
     filter: blur(7px);
     opacity: 0.4;
     animation: hoverAnimation 0.5s ease-in-out;
   }
-  
+
   .el-wrapper:hover .info-inner {
     bottom: 155px;
   }
-  
+
   .el-wrapper:hover .a-size {
     transition-delay: 300ms;
     bottom: 50px;
