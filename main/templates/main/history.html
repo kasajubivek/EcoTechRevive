@@ -6,32 +6,39 @@
 
 {% block content %}
 <div class="d-flex justify-content-center flex-wrap wrapper">
-    <div class="container m-3">
-        <h1 class="history"><i class="fas fa-history"></i> Visit Count</h1>
-        <ul class="history">
-            {% for page_visit in page_visits %}
-                <li class="history-item">
-                    <h2 class="history"><i class="fas fa-file"></i> {{ page_visit.page_name }} : {{ page_visit.visit_count }} visits</h2>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="container m-3">
-        <h1 class="history"><i class="fas fa-clock"></i>Top 3 Recent Pages</h1>
-        <ul class="history">
-            {% for page in recently_viewed %}
-                <li class="history-item">
-                    <h2 class="history"><i class="fas fa-file"></i> {{ page }}</h2>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-</div>
-<div class="text-center mt-4">
+    {% if page_visits %}
+        <div class="container m-3">
+            <h1 class="history"><i class="fas fa-history"></i> Visit Count</h1>
+            <ul class="history">
+                {% for page_visit in page_visits %}
+                    <li class="history-item">
+                        <h2 class="history"><i class="fas fa-file"></i> {{ page_visit.page_name }} : {{ page_visit.visit_count }} visits</h2>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="container m-3">
+            <h1 class="history"><i class="fas fa-clock"></i> Top 3 Recent Pages</h1>
+            <ul class="history">
+                {% for page in recently_viewed %}
+                    <li class="history-item">
+                        <h2 class="history"><i class="fas fa-file"></i> {{ page }}</h2>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <div class="container m-3">
+            <h1 class="history"><i class="fas fa-info-circle"></i> No pages visited yet!</h1>
+        </div>
+    {% endif %}
+    <div class="text-center mt-4">
     <button class="btn btn-primary refresh-button" onclick="refreshPage()">
         <i class="fas fa-sync-alt"></i> Refresh
     </button>
 </div>
+</div>
+
 
 <script>
     function refreshPage() {
@@ -97,6 +104,5 @@
     }
 </style>
 
-<!-- Include Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 {% endblock %}

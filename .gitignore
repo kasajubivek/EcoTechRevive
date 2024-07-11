@@ -5,3 +5,4 @@ ecotechrevive/__pycache__
 main/__pycache__
 main/migrations
 env
+**/migrations/
