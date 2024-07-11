@@ -5,8 +5,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Device, UserProfile, Product
-from .forms import LoginForm, RegisterForm, UploadFileForm, UserHistoryForm, EditProfileForm, PasswordResetForm, SetNewPasswordForm, ProductForm, ContactForm
+from .forms import LoginForm, RegisterForm, UploadFileForm, UserHistoryForm, EditProfileForm, PasswordResetForm, \
+    SetNewPasswordForm, ProductForm, ContactForm
 from django.contrib.auth import update_session_auth_hash
+
 
 def index(request):
     return render(request, 'main/index.html')
@@ -35,6 +37,7 @@ class DeviceListView(ListView):
 class DeviceDetailView(DetailView):
     model = Device
     template_name = 'main/device_detail.html'
+
 
 # Login functionality for the user
 # It uses he User model provided by Django framework
@@ -131,7 +134,6 @@ def edit_profile(request):
 #         form = UserHistoryForm()
 #     return render(request, 'main/user_history.html', {'form': form})
 
-
 def search_results(request):
     query = request.GET.get('q')
     # Perform search based on query
@@ -155,6 +157,7 @@ def team_details(request):
     page_view(request, 'Team Details')
     return render(request, 'main/team_details.html')
 
+
 def password_reset_security_question(request):
     if request.method == 'POST':
         form = PasswordResetForm(request.POST)
@@ -167,8 +170,8 @@ def password_reset_security_question(request):
                 user = User.objects.get(username=username)
                 profile = UserProfile.objects.get(user=user)
                 if (profile.security_answer_1 == security_answer_1 and
-                    profile.security_answer_2 == security_answer_2 and
-                    profile.security_answer_3 == security_answer_3):
+                        profile.security_answer_2 == security_answer_2 and
+                        profile.security_answer_3 == security_answer_3):
                     request.session['reset_user_id'] = user.id
                     return redirect('password_reset_new_password')
                 else:
@@ -181,6 +184,7 @@ def password_reset_security_question(request):
         form = PasswordResetForm()
 
     return render(request, 'main/password_reset_security_question.html', {'form': form})
+
 
 def set_new_password(request):
     if request.method == 'POST':
@@ -202,13 +206,11 @@ def set_new_password(request):
     return render(request, 'main/set_new_password.html', {'form': form})
 
 
-
-
 def page_view(request, page):
     page_counts = request.session.get('page_counts', {})
     page_counts[page] = page_counts.get(page, 0) + 1
     request.session['page_counts'] = page_counts
-    recently_viewed(request,page)
+    recently_viewed(request, page)
 
 
 def recently_viewed(request, page):
@@ -225,6 +227,7 @@ def recently_viewed(request, page):
 
     request.session.modified = True
 
+
 def history(request):
     page_counts = request.session.get('page_counts', {})
     page_visits = [{'page_name': page_name, 'visit_count': count} for page_name, count in page_counts.items()]
@@ -233,6 +236,7 @@ def history(request):
     recently_viewed = request.session.get('recently_viewed', {})
 
     return render(request, 'main/history.html', {'page_visits': page_visits_sorted, 'recently_viewed': recently_viewed})
+
 
 def contact_us(request):
     if request.method == 'POST':
@@ -248,6 +252,7 @@ def contact_us(request):
 def contact_success(request):
     return redirect('index')
 
+
 @login_required
 def add_product(request):
     if request.method == 'POST':
@@ -260,17 +265,19 @@ def add_product(request):
     page_view(request, 'Add Product')
     return render(request, 'main/add_product.html', {'form': form})
 
+
 def contactus_view(request):
     sub = forms.ContactusForm()
     if request.method == 'POST':
         sub = forms.ContactusForm(request.POST)
         if sub.is_valid():
             email = sub.cleaned_data['Email']
-            name=sub.cleaned_data['Name']
+            name = sub.cleaned_data['Name']
             message = sub.cleaned_data['Message']
-            send_mail(str(name)+' || '+str(email),message, settings.EMAIL_HOST_USER, settings.EMAIL_RECEIVING_USER, fail_silently = False)
+            send_mail(str(name) + ' || ' + str(email), message, settings.EMAIL_HOST_USER, settings.EMAIL_RECEIVING_USER,
+                      fail_silently=False)
             return render(request, 'contactussuccess.html')
-    return render(request, 'contactus.html', {'form':sub})
+    return render(request, 'contactus.html', {'form': sub})
 
 
 def index(request):
@@ -287,13 +294,13 @@ def index(request):
     return render(request, 'main/index.html', {'form': form, 'products': products})
 
 
-
 @login_required
 def add_to_cart_view(request, pk):
     product = get_object_or_404(Product, pk=pk)
     # Logic to add the product to the cart
     messages.info(request, f'{product.name} added to cart successfully!')
     return redirect('index')
+
 
 @login_required
 def add_to_cart(request, pk):
@@ -302,6 +309,7 @@ def add_to_cart(request, pk):
     cart.products.add(product)
     messages.success(request, 'Product added to cart successfully!')
     return redirect('index')
+
 
 def contact_us(request):
     if request.method == 'POST':
@@ -313,4 +321,4 @@ def contact_us(request):
     else:
         form = ContactForm()
 
-    return render(request, 'main/index.html', {'form': form})
+    return render(request, 'main/contact_us.html', {'form': form})
