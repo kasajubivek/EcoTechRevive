@@ -5,8 +5,14 @@
 
 {% block content %}
 <h2 class="mb-4">Contact Us</h2>
+<!--<form action="{% url 'contact_us' %}" method="post">-->
+<!--        {% csrf_token %}-->
+<!--        {{ form.as_p }}-->
+<!--        <input type="submit" name="submit2" value="Done" />-->
+<!--    </form>-->
 <form method="post">
-    {% csrf_token %}
+
+
     <div class="form-group">
         <label for="name">Name</label>
         <input type="text" class="form-control" id="name" name="name">
