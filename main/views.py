@@ -331,7 +331,10 @@ def contact_us(request):
 
 
 def shop(request):
-    products = Product.objects.exclude(uploaded_by=request.user)
+    if request.user.is_authenticated:
+        products = Product.objects.exclude(uploaded_by=request.user)
+    else:
+        products = Product.objects.all()
 
     return render(request, 'main/shop.html',{'products': products})
 
