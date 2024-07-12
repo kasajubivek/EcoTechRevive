@@ -405,3 +405,9 @@ def order_detail(request, order_id):
     order = Order.objects.get(id=order_id, user=request.user)
     order_items = OrderItem.objects.filter(order=order)
     return render(request, 'main/order_detail.html', {'order': order, 'order_items': order_items})
+
+
+@login_required
+def order_list(request):
+    orders = Order.objects.filter(user=request.user)
+    return render(request, 'main/order_list.html', {'orders': orders})

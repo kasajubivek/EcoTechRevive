@@ -1,0 +1,52 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Order List{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4 text-center">Your Orders</h1>
+    {% if orders %}
+    <div class="card shadow">
+        <div class="card-body">
+            <ul class="list-group">
+                {% for order in orders %}
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Order #{{ order.id }}</h4>
+                        <p class="mb-0">
+                            <strong>Order Date:</strong> {{ order.created_at|date:"F j, Y" }}
+                        </p>
+                    </div>
+                    <hr>
+                    <ul class="order-item-list">
+                        {% for item in order.orderitem_set.all %}
+                        <li class="order-item d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <h5>{{ item.product.name }}</h5>
+                                <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+                                <p><strong>Price:</strong> ${{ item.product.price }}</p>
+                            </div>
+                            <img src="{{ item.product.product_image.url }}" alt="{{ item.product.name }}" class="img-thumbnail" style="max-width: 100px;">
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="text-right mt-3">
+                        <p class="mb-0"><strong>Total Price:</strong> ${{ order.total_price }}</p>
+                        {% if order.is_paid %}
+                            <p class="text-success mb-0"><strong>Status:</strong> Paid</p>
+                        {% else %}
+                            <p class="text-warning mb-0"><strong>Status:</strong> Not Paid</p>
+                        {% endif %}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-info mt-3" role="alert">
+        No orders found.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

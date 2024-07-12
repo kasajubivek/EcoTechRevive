@@ -771,7 +771,7 @@ h1, h2, p {
   font-size: 2em;
   padding: 10px;
   display: inline-block; /* Inline-block to prevent full width */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for readability */
+  /*text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); !* Add text shadow for readability *!*/
 }
 
 .hero-buttons {
