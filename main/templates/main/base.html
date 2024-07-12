@@ -32,8 +32,13 @@
                         Account
                     </a>
                     <div class="dropdown-menu">
+                        {% if user.is_authenticated %}
+                            <a class="dropdown-item" href="{% url 'profile' %}">Go to Profile</a>
+                            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                        {% else %}
                         <a class="dropdown-item" href="{% url 'login' %}">Login</a>
                         <a class="dropdown-item" href="{% url 'register' %}">Register</a>
+                        {% endif %}
                     </div>
                 </li>
 
