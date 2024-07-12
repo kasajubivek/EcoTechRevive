@@ -27,8 +27,17 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'contact_us' %}">Contact</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button">
+                        Account
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+                        <a class="dropdown-item" href="{% url 'register' %}">Register</a>
+                    </div>
                 </li>
-                <!-- Add more navbar items as needed -->
+
+
             </ul>
 
             <!-- Search form in the navbar -->
@@ -45,16 +54,11 @@
         {% endblock %}
     </div>
 
-    <!-- Include Bootstrap JS -->
-   <!-- Include jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-
-<!-- Include Popper.js (updated to a common version used with Bootstrap 4) -->
+<!-- Include Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <!-- Include Popper.js (updated to a common version used with Bootstrap 4) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-
-<!-- Include Bootstrap JS (ensure it matches the version of jQuery and Popper.js) -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh/jFc/8+Q6BvJISDI1/ksG5t8LI9bTlq+7Fq" crossorigin="anonymous"></script>
-
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh/jFc/8+Q6BvJISDI1/ksG5t8LI9bTlq+7Fq" crossorigin="anonymous"></script>
     {% if messages %}
     <div class="container mt-4">
         {% for message in messages %}
