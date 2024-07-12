@@ -13,12 +13,24 @@ class LoginForm(forms.Form):
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     password_confirm = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    security_question_1 = forms.ChoiceField(choices=UserProfile.SECURITY_QUESTIONS, label='Security Question 1')
-    security_answer_1 = forms.CharField(label='Security Answer 1')
-    security_question_2 = forms.ChoiceField(choices=UserProfile.SECURITY_QUESTIONS, label='Security Question 2')
-    security_answer_2 = forms.CharField(label='Security Answer 2')
-    security_question_3 = forms.ChoiceField(choices=UserProfile.SECURITY_QUESTIONS, label='Security Question 3')
-    security_answer_3 = forms.CharField(label='Security Answer 3')
+    security_question_1 = forms.ChoiceField(
+        choices=[('', 'Select an appropriate question')] + UserProfile.SECURITY_QUESTIONS,
+        label='Security Question 1',
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    security_answer_1 = forms.CharField(label='Security Answer 1', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    security_question_2 = forms.ChoiceField(
+        choices=[('', 'Select an appropriate question')] + UserProfile.SECURITY_QUESTIONS,
+        label='Security Question 2',
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    security_answer_2 = forms.CharField(label='Security Answer 2', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    security_question_3 = forms.ChoiceField(
+        choices=[('', 'Select an appropriate question')] + UserProfile.SECURITY_QUESTIONS,
+        label='Security Question 3',
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    security_answer_3 = forms.CharField(label='Security Answer 3', widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = User
