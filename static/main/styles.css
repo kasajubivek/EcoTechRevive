@@ -7,6 +7,11 @@ html, body {
     font-family: 'Poppins', sans-serif;
 }
 
+/* Remove text shadow from all text elements */
+body, h1, h2, h3, h4, h5, h6, p, span {
+    text-shadow: none !important;
+}
+
 .wrapper {
     display: flex;
     flex-direction: column;
