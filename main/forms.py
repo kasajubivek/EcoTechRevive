@@ -131,6 +131,7 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ['name', 'price', 'description', 'product_image']
+        exclude = ['uploaded_by']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'price': forms.NumberInput(attrs={'class': 'form-control'}),

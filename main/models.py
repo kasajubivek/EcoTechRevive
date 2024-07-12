@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class Device(models.Model):
     DEVICE_TYPES = [
@@ -98,6 +100,56 @@ class Product(models.Model):
     product_image = models.ImageField(upload_to='product_image/', null=True, blank=True)
     price = models.PositiveIntegerField()
     description = models.CharField(max_length=40)
+    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
 
     def __str__(self):
         return self.name
+
+
+
+class Cart(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Cart of {self.user.username}"
+
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.quantity} of {self.product.name} in {self.cart}"
+
+
+
+@receiver(post_save, sender=User)
+def create_user_cart(sender, instance, created, **kwargs):
+    if created:
+        Cart.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_cart(sender, instance, **kwargs):
+    instance.cart.save()
+
+
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_paid = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Order {self.id} by {self.user.username}"
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"{self.quantity} of {self.product.name} in Order {self.order.id}"
+
+

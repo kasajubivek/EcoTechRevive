@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Order Details{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Order {{ order.id }}</h1>
+    <div class="card">
+        <div class="card-body">
+            <ul class="list-group">
+                {% for item in order_items %}
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5>{{ item.product.name }}</h5>
+                                <p>Quantity: {{ item.quantity }}</p>
+                            </div>
+                            <img src="{{ item.product.product_image.url }}" alt="{{ item.product.name }}" class="img-thumbnail" style="max-width: 100px;">
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="mt-4">
+                <p><strong>Order Date:</strong> {{ order.created_at }}</p>
+                <p><strong>Order Status:</strong> {{ order.is_paid|yesno:"Paid,Not Paid" }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

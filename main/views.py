@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Device, UserProfile, Product
+from .models import Device, UserProfile, Product, Cart, CartItem, Order, OrderItem
 from .forms import LoginForm, RegisterForm, UploadFileForm, UserHistoryForm, EditProfileForm, PasswordResetForm, \
     SetNewPasswordForm, ProductForm, ContactForm
 from django.contrib.auth import update_session_auth_hash
@@ -54,7 +54,9 @@ def user_login(request):
             else:
                 user = authenticate(username=username, password=password)
                 if user is not None:
+                    Cart.objects.get_or_create(user=user)
                     login(request, user)
+
                     fav_color = request.session.get('fav_color', 'red')
                     request.session.modified = True
                     return redirect('profile')
@@ -258,7 +260,9 @@ def add_product(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            product = form.save(commit=False)
+            product.uploaded_by = request.user
+            product.save()
             return redirect('index')
     else:
         form = ProductForm()
@@ -294,21 +298,21 @@ def index(request):
     return render(request, 'main/index.html', {'form': form, 'products': products})
 
 
-@login_required
-def add_to_cart_view(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    # Logic to add the product to the cart
-    messages.info(request, f'{product.name} added to cart successfully!')
-    return redirect('index')
-
-
-@login_required
-def add_to_cart(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    cart, created = Cart.objects.get_or_create(user=request.user)
-    cart.products.add(product)
-    messages.success(request, 'Product added to cart successfully!')
-    return redirect('index')
+# @login_required
+# def add_to_cart_view(request, pk):
+#     product = get_object_or_404(Product, pk=pk)
+#     # Logic to add the product to the cart
+#     messages.info(request, f'{product.name} added to cart successfully!')
+#     return redirect('index')
+#
+#
+# @login_required
+# def add_to_cart(request, pk):
+#     product = get_object_or_404(Product, pk=pk)
+#     cart, created = Cart.objects.get_or_create(user=request.user)
+#     cart.products.add(product)
+#     messages.success(request, 'Product added to cart successfully!')
+#     return redirect('index')
 
 
 def contact_us(request):
@@ -322,3 +326,79 @@ def contact_us(request):
         form = ContactForm()
 
     return render(request, 'main/contact_us.html', {'form': form})
+
+
+
+
+def shop(request):
+    products = Product.objects.exclude(uploaded_by=request.user)
+
+    return render(request, 'main/shop.html',{'products': products})
+
+
+
+@login_required
+def add_to_cart(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+
+    if not created:
+        cart_item.quantity += 1
+        cart_item.save()
+
+    return redirect('shop')
+
+
+@login_required
+def cart_detail(request):
+    cart = Cart.objects.get(user=request.user)
+    cart_items = CartItem.objects.filter(cart=cart)
+    return render(request, 'main/cart_detail.html', {'cart_items': cart_items})
+
+
+@login_required
+def delete_cart_item(request, item_id):
+    cart_item = get_object_or_404(CartItem, id=item_id, cart__user=request.user)
+    cart_item.delete()
+    return redirect('cart_detail')
+
+
+@login_required
+def increase_quantity(request, item_id):
+    cart_item = get_object_or_404(CartItem, id=item_id, cart__user=request.user)
+    cart_item.quantity += 1
+    cart_item.save()
+    return redirect('cart_detail')
+
+
+@login_required
+def decrease_quantity(request, item_id):
+    cart_item = get_object_or_404(CartItem, id=item_id, cart__user=request.user)
+    if cart_item.quantity > 1:
+        cart_item.quantity -= 1
+        cart_item.save()
+    return redirect('cart_detail')
+
+
+@login_required
+def create_order(request):
+    cart = Cart.objects.get(user=request.user)
+    cart_items = CartItem.objects.filter(cart=cart)
+
+    if not cart_items.exists():
+        return redirect('cart_detail')
+
+    order = Order.objects.create(user=request.user)
+    for item in cart_items:
+        OrderItem.objects.create(order=order, product=item.product, quantity=item.quantity)
+
+    cart_items.delete()
+
+    return redirect('order_detail', order_id=order.id)
+
+@login_required
+def order_detail(request, order_id):
+    order = Order.objects.get(id=order_id, user=request.user)
+    order_items = OrderItem.objects.filter(order=order)
+    return render(request, 'main/order_detail.html', {'order': order, 'order_items': order_items})
