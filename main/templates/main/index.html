@@ -87,14 +87,14 @@
 {#<h3 style="text-align:center; color:#3E454C;">No Search Found</h3>#}
 {#{% endif %}#}
 {##}
-{#<script>#}
-{#  document.addEventListener("DOMContentLoaded", function() {#}
-{#    const messages = {{ messages_list|safe }};#}
-{#    messages.forEach(message => {#}
-{#      alert(message);#}
-{#    });#}
-{#  });#}
-{#</script>#}
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const messages = {{ messages_list|safe }};
+    messages.forEach(message => {
+      alert(message);
+    });
+  });
+</script>
 
 <!-- <br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br> -->
