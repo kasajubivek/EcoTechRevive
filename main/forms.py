@@ -1,9 +1,9 @@
 # main/forms.py
-#sample
+# sample
 
 from django import forms
 from django.contrib.auth.models import User
-from .models import UploadedFile, UserProfile,  Product
+from .models import UploadedFile, UserProfile, Product, EnquiryModel
 
 
 class LoginForm(forms.Form):
@@ -19,19 +19,22 @@ class RegisterForm(forms.ModelForm):
         label='Security Question 1',
         widget=forms.Select(attrs={'class': 'form-control'})
     )
-    security_answer_1 = forms.CharField(label='Security Answer 1', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    security_answer_1 = forms.CharField(label='Security Answer 1',
+                                        widget=forms.TextInput(attrs={'class': 'form-control'}))
     security_question_2 = forms.ChoiceField(
         choices=[('', 'Select an appropriate question')] + UserProfile.SECURITY_QUESTIONS,
         label='Security Question 2',
         widget=forms.Select(attrs={'class': 'form-control'})
     )
-    security_answer_2 = forms.CharField(label='Security Answer 2', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    security_answer_2 = forms.CharField(label='Security Answer 2',
+                                        widget=forms.TextInput(attrs={'class': 'form-control'}))
     security_question_3 = forms.ChoiceField(
         choices=[('', 'Select an appropriate question')] + UserProfile.SECURITY_QUESTIONS,
         label='Security Question 3',
         widget=forms.Select(attrs={'class': 'form-control'})
     )
-    security_answer_3 = forms.CharField(label='Security Answer 3', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    security_answer_3 = forms.CharField(label='Security Answer 3',
+                                        widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = User
@@ -115,6 +118,7 @@ class PasswordResetForm(forms.Form):
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
 
+
 class SetNewPasswordForm(forms.Form):
     new_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}), label='New Password')
     confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}),
@@ -127,6 +131,7 @@ class SetNewPasswordForm(forms.Form):
         if new_password != confirm_password:
             raise forms.ValidationError("Passwords do not match.")
         return cleaned_data
+
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -141,14 +146,33 @@ class ProductForm(forms.ModelForm):
         }
 
 
-#for contact us page
+# for contact us page
 class ContactusForm(forms.Form):
     Name = forms.CharField(max_length=30)
     Email = forms.EmailField()
-    Message = forms.CharField(max_length=500,widget=forms.Textarea(attrs={'rows': 3, 'cols': 30}))
+    Message = forms.CharField(max_length=500, widget=forms.Textarea(attrs={'rows': 3, 'cols': 30}))
 
 
 class ContactForm(forms.Form):
     name = forms.CharField(max_length=30, required=True)
     email = forms.EmailField(required=True)
     message = forms.CharField(widget=forms.Textarea, required=True)
+
+
+class EnquiryForm(forms.ModelForm):
+    class Meta:
+        model = EnquiryModel
+        fields = ['company_name', 'first_name', 'last_name', 'phone_number', 'email', 'service', 'heard_about']
+
+    def __init__(self, *args, **kwargs):
+        super(EnquiryForm, self).__init__(*args, **kwargs)
+        # Combine the label for first and last name fields
+        self.fields['first_name'].label = "Name"
+        self.fields['last_name'].widget.attrs['placeholder'] = "Last Name"
+        self.fields['last_name'].label = ""  # Hide the individual label for last name
+        # Ensure service field is a ChoiceField
+        self.fields['service'] = forms.ChoiceField(
+            choices=EnquiryModel.SERVICE_CHOICES,
+            required=True,
+            widget=forms.Select
+        )

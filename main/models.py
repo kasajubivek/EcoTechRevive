@@ -3,13 +3,14 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-class Device(models.Model):
-    DEVICE_TYPES = [
-        ('Smartphone', 'Smartphone'),
-        ('Tablet', 'Tablet'),
-        ('Laptop', 'Laptop'),
-    ]
+DEVICE_TYPES = [
+    ('Smartphone', 'Smartphone'),
+    ('Tablet', 'Tablet'),
+    ('Laptop', 'Laptop'),
+]
 
+
+class Device(models.Model):
     name = models.CharField(max_length=100)
     device_type = models.CharField(max_length=50, choices=DEVICE_TYPES)
     brand = models.CharField(max_length=50)
@@ -95,6 +96,7 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+
 class Product(models.Model):
     name = models.CharField(max_length=40)
     product_image = models.ImageField(upload_to='product_image/', null=True, blank=True)
@@ -104,7 +106,6 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-
 
 
 class Cart(models.Model):
@@ -123,16 +124,15 @@ class CartItem(models.Model):
         return f"{self.quantity} of {self.product.name} in {self.cart}"
 
 
-
 @receiver(post_save, sender=User)
 def create_user_cart(sender, instance, created, **kwargs):
     if created:
         Cart.objects.create(user=instance)
 
+
 @receiver(post_save, sender=User)
 def save_user_cart(sender, instance, **kwargs):
     instance.cart.save()
-
 
 
 class Order(models.Model):
@@ -148,6 +148,7 @@ class Order(models.Model):
         total = sum(item.product.price * item.quantity for item in self.orderitem_set.all())
         return total
 
+
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -157,3 +158,20 @@ class OrderItem(models.Model):
         return f"{self.quantity} of {self.product.name} in Order {self.order.id}"
 
 
+class EnquiryModel(models.Model):
+    SERVICE_CHOICES = [
+        (0, "Business IT Asset Disposition"),
+        (1, "Residential Recycling"),
+        (2, "Wholesale Purchasing"),
+        (3, "Purchase refurbished tech"),
+    ]
+    company_name = models.CharField(max_length=255, blank=True)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    phone_number = models.CharField(max_length=20, blank=True)
+    email = models.EmailField(max_length=255)
+    service = models.IntegerField(choices=SERVICE_CHOICES)
+    heard_about = models.CharField(max_length=255, blank=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
