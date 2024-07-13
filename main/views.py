@@ -4,9 +4,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Device, UserProfile, Product, Cart, CartItem, Order, OrderItem
+from .models import Device, UserProfile, Product, Cart, CartItem, Order, OrderItem, EnquiryModel
 from .forms import LoginForm, RegisterForm, UploadFileForm, UserHistoryForm, EditProfileForm, PasswordResetForm, \
-    SetNewPasswordForm, ProductForm, ContactForm
+    SetNewPasswordForm, ProductForm, ContactForm, EnquiryForm
 from django.contrib.auth import update_session_auth_hash
 
 
@@ -328,16 +328,13 @@ def contact_us(request):
     return render(request, 'main/contact_us.html', {'form': form})
 
 
-
-
 def shop(request):
     if request.user.is_authenticated:
         products = Product.objects.exclude(uploaded_by=request.user)
     else:
         products = Product.objects.all()
 
-    return render(request, 'main/shop.html',{'products': products})
-
+    return render(request, 'main/shop.html', {'products': products})
 
 
 @login_required
@@ -400,6 +397,7 @@ def create_order(request):
 
     return redirect('order_detail', order_id=order.id)
 
+
 @login_required
 def order_detail(request, order_id):
     order = Order.objects.get(id=order_id, user=request.user)
@@ -411,3 +409,16 @@ def order_detail(request, order_id):
 def order_list(request):
     orders = Order.objects.filter(user=request.user)
     return render(request, 'main/order_list.html', {'orders': orders})
+
+
+def EnquiryRequest(request):
+    if request.method == 'POST':
+        form = EnquiryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'You request has been submitted successfully.')
+            return redirect('index')
+    else:
+        form = EnquiryForm()
+    return render(request, 'main/enquiry_request.html', {'form': form})
+
