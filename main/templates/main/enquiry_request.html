@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Electronics Recycling Form</title>
+</head>
+<body>
+<h1>Contact Us About Your Electronics Recycling Needs</h1>
+<p>Your organization's electronics recycling needs are our priority. Once you have completed the form below, our
+    experienced customer service representatives will contact you as soon as possible. We look forward to working with
+    you.</p>
+<form action="{% url 'enquiry' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+</body>
+{% endblock %}
