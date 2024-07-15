@@ -4,7 +4,7 @@ html, body {
     padding: 0;
     box-sizing: border-box;
     width: 100%;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Font Awesome 5 Free";
 }
 
 /* Remove text shadow from all text elements */
@@ -751,12 +751,15 @@ body {
     padding: 0 20px; /* Add padding to the sides */
     box-sizing: border-box;
     text-align: center;
+
+
 }
 
 h1, h2, p {
     margin: 0;
     font-size: 2em;
     padding: 10px;
+     border-radius: 25px; /* Rounded corners */
     display: inline-block; /* Inline-block to prevent full width */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for readability */
 }
@@ -771,7 +774,7 @@ h1, h2, p {
     margin: 5px;
     border-radius: 5px;
     color: white;
-    background-color: green;
+    background-color: #3E464D;
     transition: background-color 0.3s;
     display: inline-block; /* Ensure buttons do not stretch */
 }
@@ -781,7 +784,7 @@ h1, h2, p {
 }
 
 .btn-request {
-    background-color: #4CAF50;
+    background-color: green;
 }
 
 .btn-shop {
