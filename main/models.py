@@ -104,6 +104,7 @@ class Product(models.Model):
     description = models.CharField(max_length=40)
     uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
 
+
     def __str__(self):
         return self.name
 

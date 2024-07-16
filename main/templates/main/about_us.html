@@ -1,9 +1,13 @@
-
 {% extends 'main/base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="about-us">
-     <h1 class="text-center">About EcoTechRevive</h1>
+    
+    <!-- Image added at the top -->
+    <div class="text-center mb-4 about-us-image">
+        <img src="{% static 'main/images/about-us.jpg' %}" alt="About EcoTechRevive" class="img-fluid rounded">
+    </div>
     <div class="row">
         <div class="col-md-12">
             <h2>Our Mission</h2>
@@ -31,4 +35,3 @@
     </div>
 </div>
 {% endblock %}
-

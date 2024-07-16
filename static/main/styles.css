@@ -5,6 +5,7 @@ html, body {
     box-sizing: border-box;
     width: 100%;
     font-family: "Font Awesome 5 Free";
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 /* Remove text shadow from all text elements */
@@ -16,6 +17,7 @@ body, h1, h2, h3, h4, h5, h6, p, span {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    width: 100%; /* Ensure the wrapper spans the full width */
 }
 
 .content {
@@ -23,19 +25,23 @@ body, h1, h2, h3, h4, h5, h6, p, span {
 }
 
 .container {
-    max-width: 1170px;
+    max-width: 100%; /* Remove max-width to allow full width */
     margin: auto;
+    padding: 0;
 }
 
 .row {
   display: flex;
   flex-wrap: wrap;
   margin: 0 -15px;
+
+
 }
 
 ul {
     list-style: none;
 }
+
 
 /* Dropdown Styles */
 .nav-item .dropdown-toggle {
@@ -69,13 +75,12 @@ ul {
 
 /* About Us Page Specific Styles */
 
-/* CSS Styling */
 .about-us {
-    padding: 50px 20px;
+    padding: 0;
     background-color: #ffffff; /* Light background for contrast */
     text-align: center;
     color: #333333; /* Standard text color for readability */
-    max-width: 800px;
+    max-width: 1200px; /* Increase max-width to make it wider */
     margin: 40px auto;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-radius: 8px;
@@ -100,6 +105,14 @@ ul {
     text-decoration: none;
 }
 
+/* Styling for the image */
+.about-us img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 20px; /* Space below the image */
+}
+
 /* Styling for links within the About Us page */
 .about-us a {
     color: #007f5c; /* A brighter shade of green for links */
@@ -117,14 +130,21 @@ ul {
     .about-us {
         padding: 20px; /* Lesser padding on smaller screens */
         margin: 20px auto; /* Lesser margin on smaller screens */
+        max-width: 100%; /* Ensure it uses the full width on smaller screens */
     }
 }
 
+
+
 .footer {
-    background-color: #24262b;
-    padding: 70px 0;
-    margin-top: auto;
     width: 100%;
+    margin: 0;
+    padding: 20px 0;
+    background-color: #343a40;
+    color: #fff;
+    position: relative;
+    bottom: 0;
+    margin-top: auto;
 }
 
 .footer-col {
@@ -217,6 +237,8 @@ body {
     margin-bottom: 30px;
 }
 
+
+
 .contact-us-section h2 {
     margin-bottom: 20px;
 }
@@ -249,6 +271,8 @@ body {
 .contact-us-section button:hover {
     background-color: #45a049;
 }
+
+
 
 .footer {
     padding: 20px 0;
@@ -302,7 +326,6 @@ html {
     justify-content: center;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
-    justify-content: center;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
@@ -328,6 +351,7 @@ body {
     margin: 15px auto;
     background-color: #fff;
     border-radius: 15px;
+
 }
 
 @media (max-width: 991px) {
@@ -642,12 +666,17 @@ img {
     opacity: 1;
 }
 
+
+
 /* Contact Form Styling */
+
 .contact-section {
     background-color: #f9f9f9;
     padding: 50px 0;
     text-align: center;
     margin-bottom: 30px;
+    justify-content: center;
+
 }
 
 .contact-section h2 {
@@ -717,6 +746,7 @@ body {
 
 .container.mt-4 {
     flex: 1;
+
 }
 
 /*background image style*/
@@ -728,18 +758,43 @@ body {
     font-family: Arial, sans-serif;
 } */
 
+.contact-container {
+    max-width: 800px; /* Increase max-width for more stretch */
+    margin: 0 auto;
+    padding: 40px; /* Increase padding for more height and spacing */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: #ffffff; /* Optional: add a background color */
+    border-radius: 8px; /* Optional: add rounded corners */
+    min-height: 500px; /* Increase minimum height */
+}
+
+.contact-container h2 {
+    text-align: center;
+    margin-bottom: 30px; /* Increase margin for spacing */
+}
+
+.contact-container .form-group label {
+    font-weight: bold;
+}
+
+.contact-container .form-control {
+    margin-bottom: 20px; /* Increase margin for spacing between form fields */
+}
+
+
 .hero-section {
     position: relative;
     text-align: center;
     color: white;
-    height: 500px; /* Adjust height as needed */
+    height: 100vh; /* Full viewport height */
+    width: 100vw; /* Full viewport width */
     background-image: url('/static/main/images/hero-background.jpg'); /* Path to your background image */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    width: 100%;
     margin: 0;
     padding: 0;
+    overflow: hidden; /* Ensure the content doesn't overflow */
 }
 
 .hero-content {
@@ -751,15 +806,13 @@ body {
     padding: 0 20px; /* Add padding to the sides */
     box-sizing: border-box;
     text-align: center;
-
-
 }
 
 h1, h2, p {
     margin: 0;
     font-size: 2em;
     padding: 10px;
-     border-radius: 25px; /* Rounded corners */
+    border-radius: 25px; /* Rounded corners */
     display: inline-block; /* Inline-block to prevent full width */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for readability */
 }
