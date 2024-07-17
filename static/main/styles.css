@@ -748,9 +748,18 @@ body {
     text-align: center;
 }
 
-h1, h2, p {
+p {
     margin: 0;
     font-size: 1em;
+    padding: 10px;
+    border-radius: 25px; /* Rounded corners */
+    display: inline-block; /* Inline-block to prevent full width */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for readability */
+}
+
+h1, h2{
+    margin: 0;
+    font-size: 2em;
     padding: 10px;
     border-radius: 25px; /* Rounded corners */
     display: inline-block; /* Inline-block to prevent full width */
