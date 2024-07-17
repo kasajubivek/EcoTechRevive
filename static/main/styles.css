@@ -76,66 +76,6 @@ ul {
 }
 
 
-/* About Us Page Specific Styles */
-
-.about-us {
-    padding: 0;
-    background-color: #ffffff; /* Light background for contrast */
-    text-align: center;
-    color: #333333; /* Standard text color for readability */
-    max-width: 1200px; /* Increase max-width to make it wider */
-    margin: 40px auto;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    font-family: 'Roboto', sans-serif; /* Roboto font for a clean look */
-}
-
-.about-us h1, .about-us h2 {
-    color: green; /* Dark green for headings, replacing the blue */
-    margin-top: 0;
-    padding-top: 20px;
-}
-
-.about-us h2 {
-    margin-top: 20px; /* Space above secondary headers */
-}
-
-.about-us p {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #666666; /* Grey color for paragraphs to reduce strain */
-    margin-bottom: 20px;
-    text-decoration: none;
-}
-
-/* Styling for the image */
-.about-us img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px; /* Rounded corners */
-    margin-bottom: 20px; /* Space below the image */
-}
-
-/* Styling for links within the About Us page */
-.about-us a {
-    color: #007f5c; /* A brighter shade of green for links */
-    text-decoration: none; /* No underline to keep it clean */
-    transition: color 0.3s ease-in-out; /* Smooth transition for hover effect */
-}
-
-.about-us a:hover {
-    color: #005a4f; /* Darker green on hover for links */
-    text-decoration: underline; /* Underline on hover for clarity */
-}
-
-/* Responsive Design Adjustments */
-@media (max-width: 768px) {
-    .about-us {
-        padding: 20px; /* Lesser padding on smaller screens */
-        margin: 20px auto; /* Lesser margin on smaller screens */
-        max-width: 100%; /* Ensure it uses the full width on smaller screens */
-    }
-}
 
 
 
