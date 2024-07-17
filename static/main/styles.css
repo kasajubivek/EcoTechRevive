@@ -76,9 +76,6 @@ ul {
 }
 
 
-
-
-
 .footer {
     width: 100%;
     margin: 0;
@@ -753,7 +750,7 @@ body {
 
 h1, h2, p {
     margin: 0;
-    font-size: 2em;
+    font-size: 1em;
     padding: 10px;
     border-radius: 25px; /* Rounded corners */
     display: inline-block; /* Inline-block to prevent full width */
