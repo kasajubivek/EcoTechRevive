@@ -31,7 +31,7 @@
     padding: 5%;
 }
 
-.video-container {
+.img-container {
     width: 100%; /* Ensure the container covers the width */
     display: flex;
     align-items: center;
@@ -39,10 +39,10 @@
     height: 100%;
 }
 
-.video-fluid {
-    height: 100%; /* Ensure the video takes full height */
-    width: 100%; /* Ensure the video covers the width */
-    object-fit: cover; /* Ensure the video covers the area without distortion */
+.img-fluid {
+    height: 100%; /* Ensure the image takes full height */
+    width: 100%; /* Ensure the image covers the width */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
 }
 
 @media (max-width: 767px) {
@@ -54,7 +54,7 @@
         height: 50vh; /* Adjust height for smaller screens */
     }
 
-    .video-fluid {
+    .img-fluid {
         max-height: 50vh;
     }
 }
@@ -62,13 +62,10 @@
 
 <div class="container-fluid">
     <div class="row w-100">
-        <!-- Left side with video -->
+        <!-- Left side with image -->
         <div class="col-md-8 d-none d-md-flex left-column">
-            <div class="video-container">
-                <video class="video-fluid" autoplay loop muted>
-                    <source src="{% static 'main/images/login-logo.mp4' %}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+            <div class="img-container">
+                <img src="{% static 'main/images/login-logo.gif' %}" alt="Login GIF" class="img-fluid">
             </div>
         </div>
         <!-- Right side with login form -->
