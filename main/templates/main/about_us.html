@@ -2,12 +2,70 @@
 {% load static %}
 
 {% block content %}
+<style>
+    .about-us {
+        position: relative;
+        text-align: center;
+        color: white;
+        background: url("{% static 'main/images/about-us.jpg' %}") no-repeat center center;
+        background-size: cover;
+        padding: 150px 20px;
+        margin-bottom: 40px;
+    }
+
+    .about-us-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .about-us h1 {
+        font-size: 3em;
+        margin: 0;
+    }
+
+    .about-us h3 {
+        font-size: 1.5em;
+        margin-top: 20px;
+    }
+
+    .content {
+        background-color: #ffffff;
+        padding: 40px 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .content h2 {
+        color: green;
+        margin-top: 20px;
+    }
+
+    .content p {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #666666;
+        margin-bottom: 20px;
+    }
+</style>
+
 <div class="about-us">
-    
-    <!-- Image added at the top -->
-    <div class="text-center mb-4 about-us-image">
-        <img src="{% static 'main/images/about-us.jpg' %}" alt="About EcoTechRevive" class="img-fluid rounded">
+    <div class="about-us-overlay">
+        <h1>About EcoTechRevive</h1>
+        <h3>Revitalizing Technology, Reducing Waste</h3>
     </div>
+</div>
+
+<div class="content">
     <div class="row">
         <div class="col-md-12">
             <h2>Our Mission</h2>
