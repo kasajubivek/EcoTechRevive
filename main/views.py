@@ -136,13 +136,13 @@ def edit_profile(request):
 #         form = UserHistoryForm()
 #     return render(request, 'main/user_history.html', {'form': form})
 
-def search_results(request):
-    query = request.GET.get('q')
-    # Perform search based on query
-    results = []
-    page_view(request, 'Search')
-    return render(request, 'main/search_results.html', {'results': results})
-
+# def search_results(request):
+#     query = request.GET.get('q')
+#     # Perform search based on query
+#     results = []
+#     page_view(request, 'Search')
+#     return render(request, 'main/search_results.html', {'results': results})
+#
 
 def contact_us(request):
     page_view(request, 'Contact Us')
@@ -331,10 +331,11 @@ def contact_us(request):
 def shop(request):
     if request.user.is_authenticated:
         products = Product.objects.exclude(uploaded_by=request.user)
+
     else:
         products = Product.objects.all()
-
-    return render(request, 'main/shop.html', {'products': products})
+    title = 'Explore Our Products'
+    return render(request, 'main/shop.html', {'products': products, 'title': title})
 
 
 @login_required
@@ -422,3 +423,14 @@ def EnquiryRequest(request):
         form = EnquiryForm()
     return render(request, 'main/enquiry_request.html', {'form': form})
 
+
+@login_required
+def search_products(request):
+    query = request.GET.get('q')
+    if query:
+        products = Product.objects.filter(name__icontains=query)
+        title = 'Search Results'
+    else:
+        products = Product.objects.all()
+        title = 'No results found. Explore our Products'
+    return render(request, 'main/shop.html', {'products': products, 'title': title})

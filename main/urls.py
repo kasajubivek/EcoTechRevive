@@ -13,7 +13,7 @@ urlpatterns = [
     # path('history/', views.user_history, name='user_history'),
     path('devices/', views.DeviceListView.as_view(), name='device_list'),
     path('device/<int:pk>/', views.DeviceDetailView.as_view(), name='device_detail'),
-    path('search/', views.search_results, name='search'),
+    # path('search/', views.search_results, name='search'),
     path('contact/', views.contact_us, name='contact_us'),
     path('about/', views.about_us, name='about_us'),
     path('team/', views.team_details, name='team_details'),
@@ -35,4 +35,6 @@ urlpatterns = [
     path('order/<int:order_id>/', views.order_detail, name='order_detail'),
     path('orders/', views.order_list, name='order_list'),
     path('enquiry/', views.EnquiryRequest, name='enquiry'),
+    path('search/', views.search_products, name='search_products'),
+
 ]
