@@ -422,3 +422,7 @@ def EnquiryRequest(request):
         form = EnquiryForm()
     return render(request, 'main/enquiry_request.html', {'form': form})
 
+
+def product_detail(request, id):
+    product = get_object_or_404(Product, id=id)
+    return render(request, 'main/product_detail.html', {'product': product})

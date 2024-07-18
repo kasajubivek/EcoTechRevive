@@ -16,20 +16,23 @@
         <div class="row">
           <div class="el-wrapper">
             <div class="box-up">
-              <img class="img" src="{{ p.product_image.url }}" alt="product pic" height="300px" width="300px">
+              <a href="{% url 'product_detail' p.id %}">
+                <img class="img" src="{{ p.product_image.url }}" alt="product pic" height="300px" width="300px">
+              </a>
               <div class="img-info">
                 <div class="info-inner">
                   <span style="background-color:#3e454c; color:#fbfbfb;" class="p-company">{{ p.name }}</span>
                 </div>
-                <div class="a-size">{{ p.description }}</div>
+                <div class="a-size">{{ p.description|slice:":40" }}{% if p.description|length > 0 %}... <a href="{% url 'product_detail' p.id %}">More Details</a>{% endif %}
+
+                </div>
               </div>
             </div>
             <div class="box-down">
               <div class="h-bg">
                 <div class="h-bg-inner"></div>
               </div>
-{#                <a class="cart" href="{% url 'add_to_cart' p.id %}">#}
-                <a class="cart" href="{% url 'add_to_cart' p.id %}">
+              <a class="cart" href="{% url 'add_to_cart' p.id %}">
                 <span class="price">${{ p.price }}</span>
                 <span class="add-to-cart">
                   <span class="txt"><i class="fa fa-shopping-cart"></i> Add To Cart</span>
@@ -45,7 +48,6 @@
   {% if forloop.counter|divisibleby:"3" %}
 </div>
 <div class="row">
-
   {% endif %}
   {% endfor %}
 </div>
@@ -67,7 +69,7 @@
   });
 </script>
 
-    <style>
+<style>
   .btn-custom {
     background-color: #558755; /* black background */
     color: white; /* green text */
