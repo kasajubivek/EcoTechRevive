@@ -36,5 +36,5 @@ urlpatterns = [
     path('orders/', views.order_list, name='order_list'),
     path('enquiry/', views.EnquiryRequest, name='enquiry'),
     path('search/', views.search_products, name='search_products'),
-
+    path('shop/product/<int:id>/', views.product_detail, name='product_detail'),
 ]

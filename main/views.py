@@ -434,3 +434,8 @@ def search_products(request):
         products = Product.objects.all()
         title = 'No results found. Explore our Products'
     return render(request, 'main/shop.html', {'products': products, 'title': title})
+
+
+def product_detail(request, id):
+    product = get_object_or_404(Product, id=id)
+    return render(request, 'main/product_detail.html', {'product': product})
