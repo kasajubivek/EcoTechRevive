@@ -13,3 +13,13 @@ class NoCacheMiddleware(MiddlewareMixin):
         response['Pragma'] = 'no-cache'
         response['Expires'] = 'Thu, 01 Jan 1970 00:00:00 GMT'
         return response
+
+
+class LogoutOnRestartMiddleware(MiddlewareMixin):
+    def process_request(self, request):
+        if hasattr(request, 'user') and request.user.is_authenticated:
+            # Check if server has restarted
+            restart_flag = 'server_restarted'
+            if not request.session.get(restart_flag):
+                logout(request)
+                request.session[restart_flag] = True

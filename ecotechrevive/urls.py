@@ -6,6 +6,17 @@ from django.conf.urls.static import static
 
 from main import views
 from main.views import user_register, user_profile, edit_profile
+from django.urls import path
+from django.utils import timezone  # Import timezone
+
+
+
+def set_restart_flag():
+    from django.contrib.sessions.models import Session
+    Session.objects.all().update(expire_date=timezone.now())
+
+
+set_restart_flag()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
