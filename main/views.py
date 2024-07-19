@@ -136,13 +136,13 @@ def edit_profile(request):
 #         form = UserHistoryForm()
 #     return render(request, 'main/user_history.html', {'form': form})
 
-# def search_results(request):
-#     query = request.GET.get('q')
-#     # Perform search based on query
-#     results = []
-#     page_view(request, 'Search')
-#     return render(request, 'main/search_results.html', {'results': results})
-#
+def search_results(request):
+    query = request.GET.get('q')
+    # Perform search based on query
+    results = []
+    page_view(request, 'Search')
+    return render(request, 'main/search_results.html', {'results': results})
+
 
 def contact_us(request):
     page_view(request, 'Contact Us')
@@ -427,6 +427,7 @@ def EnquiryRequest(request):
 
 @login_required
 def search_products(request):
+    page_view(request, 'Search')
     query = request.GET.get('q')
     if query:
         products = Product.objects.filter(name__icontains=query)
