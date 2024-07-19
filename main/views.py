@@ -262,7 +262,7 @@ def add_product(request):
             product = form.save(commit=False)
             product.uploaded_by = request.user
             product.save()
-            return redirect('index')
+            return redirect('profile')
     else:
         form = ProductForm()
     page_view(request, 'Add Product')
@@ -441,3 +441,22 @@ def search_products(request):
 def product_detail(request, id):
     product = get_object_or_404(Product, id=id)
     return render(request, 'main/product_detail.html', {'product': product})
+
+
+@login_required
+def my_products(request):
+    products = Product.objects.filter(uploaded_by=request.user)
+
+    return render(request, 'main/my_products.html', {'products': products})
+
+
+@login_required
+def delete_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    product.delete()
+    return redirect('profile')
+
+
+def product_info(request, id):
+    product = get_object_or_404(Product, id=id)
+    return render(request, 'main/product_info.html', {'product': product})

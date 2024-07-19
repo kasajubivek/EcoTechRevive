@@ -3,7 +3,7 @@
 {% block content %}
 {% load static %}
 {% if products %}
-<h3 style="text-align:center; color:#3E454C;">{{title}}</h3>
+<h3 style="text-align:center; color:#3E454C;">My Products</h3>
 <br>
 
 <!-- products data start -->
@@ -23,22 +23,22 @@
                 <div class="info-inner">
                   <span style="background-color:#3e454c; color:#fbfbfb;" class="p-company">{{ p.name }}</span>
                 </div>
-                <div class="a-size">{{ p.description|slice:":40" }}{% if p.description|length > 0 %}... <a href="{% url 'product_detail' p.id %}">More Details</a>{% endif %}
+                <div class="a-size">{{ p.description|slice:":40" }}{% if p.description|length > 0 %}... <a href="{% url 'product_info' p.id %}">More Details</a>{% endif %}
 
                 </div>
               </div>
             </div>
-            <div class="box-down">
-              <div class="h-bg">
-                <div class="h-bg-inner"></div>
-              </div>
-              <a class="cart" href="{% url 'add_to_cart' p.id %}">
-                <span class="price">${{ p.price }}</span>
-                <span class="add-to-cart">
-                  <span class="txt"><i class="fa fa-shopping-cart"></i> Add To Cart</span>
-                </span>
-              </a>
-            </div>
+{#            <div class="box-down">#}
+{#              <div class="h-bg">#}
+{#                <div class="h-bg-inner"></div>#}
+{#              </div>#}
+{#              <a class="cart" href="{% url 'add_to_cart' p.id %}">#}
+{#                <span class="price">${{ p.price }}</span>#}
+{#                <span class="add-to-cart">#}
+{#                  <span class="txt"><i class="fa fa-shopping-cart"></i> Add To Cart</span>#}
+{#                </span>#}
+{#              </a>#}
+{#            </div>#}
           </div>
         </div>
       </div>
