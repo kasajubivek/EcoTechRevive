@@ -151,7 +151,6 @@ def contact_us(request):
 
 def about_us(request):
     page_view(request, 'About Us')
-    page_view(request, 'About Us')
     return render(request, 'main/about_us.html')
 
 
@@ -355,6 +354,7 @@ def add_to_cart(request, product_id):
 def cart_detail(request):
     cart = Cart.objects.get(user=request.user)
     cart_items = CartItem.objects.filter(cart=cart)
+    page_view(request, 'View Cart')
     return render(request, 'main/cart_detail.html', {'cart_items': cart_items})
 
 
@@ -409,6 +409,7 @@ def order_detail(request, order_id):
 @login_required
 def order_list(request):
     orders = Order.objects.filter(user=request.user)
+    page_view(request, 'View Orders')
     return render(request, 'main/order_list.html', {'orders': orders})
 
 
