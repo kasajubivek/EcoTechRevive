@@ -6,3 +6,4 @@ main/__pycache__
 main/migrations
 env
 **/migrations/
+__pycache__
