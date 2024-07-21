@@ -228,7 +228,7 @@ def recently_viewed(request, page):
 
     request.session.modified = True
 
-
+@login_required()
 def history(request):
     page_counts = request.session.get('page_counts', {})
     page_visits = [{'page_name': page_name, 'visit_count': count} for page_name, count in page_counts.items()]
@@ -324,6 +324,8 @@ def contact_us(request):
     else:
         form = ContactForm()
 
+    page_view(request, 'Contact')
+
     return render(request, 'main/contact_us.html', {'form': form})
 
 
@@ -346,6 +348,8 @@ def add_to_cart(request, product_id):
     if not created:
         cart_item.quantity += 1
         cart_item.save()
+
+    messages.success(request, f'{product.name} has been added to your cart.')
 
     return redirect('shop')
 
@@ -446,6 +450,7 @@ def product_detail(request, id):
 @login_required
 def my_products(request):
     products = Product.objects.filter(uploaded_by=request.user)
+    page_view(request, 'My Products')
 
     return render(request, 'main/my_products.html', {'products': products})
 

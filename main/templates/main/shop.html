@@ -3,7 +3,7 @@
 {% block content %}
 {% load static %}
 {% if products %}
-<h3 style="text-align:center; color:#3E454C;">{{title}}</h3>
+<h3 style="text-align:center; color:#3E454C;">{{ title }}</h3>
 <br>
 
 <!-- products data start -->
@@ -60,20 +60,59 @@
 <h3 style="text-align:center; color:#3E454C;">Oops! There are no products</h3>
 {% endif %}
 
+<div id="popup-message" class="popup-message">
+  <span id="popup-text"></span>
+  <button onclick="closePopup()" class="popup-close-btn">&times;</button>
+</div>
+
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    const messages = {{ messages_list|safe }};
-    messages.forEach(message => {
-      alert(message);
-    });
+    {% if messages %}
+    const popupMessage = document.getElementById("popup-message");
+    const popupText = document.getElementById("popup-text");
+    {% for message in messages %}
+    popupText.innerHTML = "{{ message }}";
+    popupMessage.style.display = "block";
+    setTimeout(() => { popupMessage.style.display = "none"; }, 3000);
+    {% endfor %}
+    {% endif %}
   });
+
+  function closePopup() {
+    document.getElementById("popup-message").style.display = "none";
+  }
 </script>
 
 <style>
   .btn-custom {
-    background-color: #558755; /* black background */
-    color: white; /* green text */
-    border-color: white; /* green border */
+    background-color: #558755;
+    color: white;
+    border-color: white;
+  }
+
+  .popup-message {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    text-align: center;
+  }
+
+  .popup-close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    line-height: 20px;
+    cursor: pointer;
+    margin-left: 10px;
   }
 </style>
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block title %}Cart Details{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
+<div class="container mt-4 compressContainer">
     <h1 class="mb-4">Your Cart</h1>
     {% if cart_items %}
     <div class="card">
@@ -15,12 +15,12 @@
                             <h4>{{ item.product.name }}</h4>
                             <p>
                                 Quantity: {{ item.quantity }}
-                                <a href="{% url 'increase_quantity' item.id %}" class="btn btn-sm btn-success ml-2">+</a>
-                                <a href="{% url 'decrease_quantity' item.id %}" class="btn btn-sm btn-warning ml-2">-</a>
+                                <a href="{% url 'increase_quantity' item.id %}" class=" btn-sm btn-success ml-2">+</a>
+                                <a href="{% url 'decrease_quantity' item.id %}" class=" btn-sm btn-warning ml-2">-</a>
                             </p>
                         </div>
                         <img src="{{ item.product.product_image.url }}" alt="{{ item.product.name }}" class="img-thumbnail" style="max-width: 100px;">
-                        <a href="{% url 'delete_cart_item' item.id %}" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="{% url 'delete_cart_item' item.id %}" class=" btn-danger btn-sm">Delete</a>
                     </li>
                 {% endfor %}
             </ul>

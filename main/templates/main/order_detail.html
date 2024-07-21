@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h1 class="mb-4">Order {{ order.id }}</h1>
+    <h1 class="mb-4" style="color: #0ca10c">Order Placed (Order Id: {{ order.id }})</h1>
     <div class="card">
         <div class="card-body">
             <ul class="list-group">
@@ -22,7 +22,7 @@
             </ul>
             <div class="mt-4">
                 <p><strong>Order Date:</strong> {{ order.created_at }}</p>
-                <p><strong>Order Status:</strong> {{ order.is_paid|yesno:"Paid,Not Paid" }}</p>
+                <p><strong>Order Status:</strong>In Progress</p>
             </div>
         </div>
     </div>

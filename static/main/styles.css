@@ -33,6 +33,12 @@ body, h1, h2, h3, h4, h5, h6, p, span {
     padding: 0;
 }
 
+
+.compressContainer{
+    padding-left: 220px;
+    padding-right: 220px;
+}
+
 .row {
   display: flex;
   flex-wrap: wrap;

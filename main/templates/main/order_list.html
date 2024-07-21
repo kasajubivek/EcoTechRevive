@@ -32,11 +32,7 @@
                     </ul>
                     <div class="text-right mt-3">
                         <p class="mb-0"><strong>Total Price:</strong> ${{ order.total_price }}</p>
-                        {% if order.is_paid %}
-                            <p class="text-success mb-0"><strong>Status:</strong> Paid</p>
-                        {% else %}
-                            <p class="text-warning mb-0"><strong>Status:</strong> Not Paid</p>
-                        {% endif %}
+                            <p class="text-success mb-0"><strong>Status:</strong>In Progress</p>
                     </div>
                 </li>
                 {% endfor %}

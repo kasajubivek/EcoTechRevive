@@ -18,7 +18,7 @@
             <hr>
             <form method="post" action="{% url 'delete_product' product.id %}">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-shopping-cart"></i>Delete Product</button>
+                <button type="submit" class="btn-danger btn-lg"><i class="fa fa-shopping-cart"></i>Delete Product</button>
             </form>
         </div>
     </div>
