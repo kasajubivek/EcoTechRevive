@@ -41,6 +41,12 @@ class RegisterForm(forms.ModelForm):
         fields = ['username', 'email', 'password', 'password_confirm', 'security_question_1', 'security_answer_1',
                   'security_question_2', 'security_answer_2', 'security_question_3', 'security_answer_3']
 
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError("Username already exists. Please choose another one.")
+        return username
+
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get('password')
@@ -65,7 +71,6 @@ class RegisterForm(forms.ModelForm):
                                                  security_answer_3=self.cleaned_data['security_answer_3'])
             profile.save()
         return user
-
 
 class UploadFileForm(forms.ModelForm):
     class Meta:

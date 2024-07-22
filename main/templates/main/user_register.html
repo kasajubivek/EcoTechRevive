@@ -11,19 +11,22 @@
         background-color: #fff;
         padding: 20px 30px;
         border-radius: 8px;
-        /* box-shadow: 0 5px 5px 5px rgba(0.8, 0.8, 0.8, 0.8); /* Enhanced shadow */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .register-container h2 {
         text-align: center;
         margin-bottom: 20px;
-        font-weight: bold; /* Make the heading bold */
+        font-weight: bold;
         font-size: 30px;
-        
     }
 
     .register-container .form-group label {
         font-weight: bold;
+    }
+
+    .register-container .form-control {
+        width: 100%;
     }
 
     .register-container .btn-primary {
@@ -53,10 +56,20 @@
         <div class="form-group">
             <label for="{{ form.username.id_for_label }}">Username:</label>
             {{ form.username }}
+            {% if form.username.errors %}
+                <div class="alert alert-danger">
+                    {{ form.username.errors }}
+                </div>
+            {% endif %}
         </div>
         <div class="form-group">
             <label for="{{ form.email.id_for_label }}">Email:</label>
             {{ form.email }}
+            {% if form.email.errors %}
+                <div class="alert alert-danger">
+                    {{ form.email.errors }}
+                </div>
+            {% endif %}
         </div>
         <div class="form-group">
             <label for="{{ form.password.id_for_label }}">Password:</label>
