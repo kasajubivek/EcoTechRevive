@@ -96,6 +96,15 @@
   });
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if messages %}
+            var messages = "{% for message in messages %}{{ message }}{% if not forloop.last %}\n{% endif %}{% endfor %}";
+            alert(messages);
+        {% endif %}
+    });
+</script>
+
 <!-- <br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br> -->
 
