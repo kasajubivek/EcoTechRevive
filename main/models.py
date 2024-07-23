@@ -66,13 +66,13 @@ class UploadedFile(models.Model):
         return f"Uploaded file by {self.user.username} at {self.uploaded_at}"
 
 
-class UserSession(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    session_date = models.DateField()
-    visit_count = models.IntegerField(default=0)
+#class UserSession(models.Model):
+    #user = models.ForeignKey(User, on_delete=models.CASCADE)
+    #session_date = models.DateField()
+    #visit_count = models.IntegerField(default=0)
 
-    def __str__(self):
-        return f"Session for {self.user.username} on {self.session_date}"
+    #def __str__(self):
+        #return f"Session for {self.user.username} on {self.session_date}"
 
 
 class UserProfile(models.Model):
