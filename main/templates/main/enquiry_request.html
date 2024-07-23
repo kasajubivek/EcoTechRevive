@@ -8,14 +8,48 @@
     <title>Electronics Recycling Form</title>
 </head>
 <body>
+<div class="contact-container">
 <h1>Contact Us About Your Electronics Recycling Needs</h1>
 <p>Your organization's electronics recycling needs are our priority. Once you have completed the form below, our
     experienced customer service representatives will contact you as soon as possible. We look forward to working with
     you.</p>
 <form action="{% url 'enquiry' %}" method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
+    <div class="form-group">
+        <label for="company-name">Company Name</label>
+        <input type="text" class="form-control" id="company-name" name="company-name">
+    </div>
+    <div class="form-group">
+        <label for="first-name">First Name</label>
+        <input type="text" class="form-control" id="first-name" name="first-name">
+    </div>
+    <div class="form-group">
+        <label for="last-name">Last Name</label>
+        <input type="text" class="form-control" id="last-name" name="last-name">
+    </div>
+    <div class="form-group">
+        <label for="number">Number</label>
+        <input type="tel" class="form-control" id="number" name="number">
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" name="email">
+    </div>
+    <div class="form-group">
+        <label for="services">Service:</label>
+        <select name="services" id="services">
+            <option value="0">Business IT Asset Disposition</option>
+            <option value="1">Residential Recycling</option>
+            <option value="2">Wholesale Purchasing</option>
+            <option value="3">Purchase refurbished tech</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="heard">Heard about:</label>
+        <input type="text" class="form-control" id="heard" name="heard">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+</div>
 </body>
 {% endblock %}
