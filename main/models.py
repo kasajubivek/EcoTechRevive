@@ -56,7 +56,7 @@ class CustomerSupport(models.Model):
     def __str__(self):
         return f"Support request from {self.name} ({self.email})"
 
-
+# rem from index ?
 class UploadedFile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     file = models.FileField(upload_to='uploads/')

@@ -95,12 +95,12 @@ class EditProfileForm(forms.ModelForm):
         self.fields['email'].widget.attrs.update({'class': 'form-control'})
 
 
-class UserHistoryForm(forms.Form):
-    username = forms.CharField(max_length=150, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+#class UserHistoryForm(forms.Form):
+    #username = forms.CharField(max_length=150, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
 
 
-class UserSessionForm(forms.Form):
-    username = forms.CharField(max_length=150, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+#class UserSessionForm(forms.Form):
+    #username = forms.CharField(max_length=150, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
 
 
 class PasswordResetForm(forms.Form):
