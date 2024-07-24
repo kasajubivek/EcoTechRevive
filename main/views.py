@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Device, UserProfile, Product, Cart, CartItem, Order, OrderItem, EnquiryModel
-from .forms import LoginForm, RegisterForm, UploadFileForm, UserHistoryForm, EditProfileForm, PasswordResetForm, \
+from .forms import LoginForm, RegisterForm, UploadFileForm, EditProfileForm, PasswordResetForm, \
     SetNewPasswordForm, ProductForm, ContactForm, EnquiryForm
 from django.contrib.auth import update_session_auth_hash
 
